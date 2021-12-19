@@ -1,7 +1,8 @@
 const userData = checkLocal();
-// if(checkLogin()) {
-
-// }
+if(checkEntry()) {
+    document.getElementById('mainMenu').classList.remove('hidden');
+    document.getElementById('loginNav').classList.add('hidden');
+}
 showCar();
 
 // Form
