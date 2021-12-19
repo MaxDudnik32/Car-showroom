@@ -1,10 +1,19 @@
 let mainId;
+let userDatLog;
 
 const checkLocal = () => {
     if(localStorage.getItem('users')) {
         return JSON.parse(localStorage.getItem('users'))
     } else {
         return [];
+    }
+}
+
+const checkEntry = () => {
+    if(localStorage.getItem('login')) {
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -127,9 +136,10 @@ function isValid(validation, form, formName, valid) {
             name: savePersonForm.username.value,
             password: savePersonForm.password.value,
             email: savePersonForm.email.value,
+            post: true,
         }
 
-        console.log(savePersonForm.username.value);
+        // console.log(savePersonForm.username.value);
 
         // console.log(userDat.password === savePersonForm.confirmpassword.value);
 
@@ -207,6 +217,7 @@ const savePerson = (user) => {
     } else {
         userData.push(user);
         localStorage.setItem('users', JSON.stringify(userData));
+        localStorage.setItem('login', JSON.stringify(true));
         while(myNode.firstChild) {
             myNode.removeChild(myNode.firstChild);
         }
@@ -222,16 +233,21 @@ const savePerson = (user) => {
 const checkLogin = () => {
     const savePersonForm = document.forms.inForm.elements;
 
-    const userDatLog = {
+    userDatLog = {
         nameLog: savePersonForm.username.value,
         passwordLog: savePersonForm.password.value,
+        postlog: true,
     }
 
     usersInfo = JSON.parse(localStorage.getItem('users'));
 
     for(let i = 0; i < usersInfo.length; i++) {
         if((usersInfo[i].name === userDatLog.nameLog) && (usersInfo[i].password === userDatLog.passwordLog)) {
+            // userDatLog.postlog = usersInfo[i].post;
+            // console.log(userDatLog.postlog);
+            // console.log(usersInfo[i].post);
             showSignIn();
+            localStorage.setItem('login', JSON.stringify(true));
             document.getElementById('welcome').innerHTML = 'Welcome, ' + userDatLog.nameLog;
         }
     }
@@ -263,7 +279,9 @@ function showUsers(){
         parentCrud.appendChild(wrapper);
         wrapper.appendChild(personImg);
         wrapper.appendChild(personName);
-        showBtn(wrapper, i, parentCrud);
+        if(!userDatLog.postlog) {
+            showBtn(wrapper, i, parentCrud);
+        }
     }
 }
 
