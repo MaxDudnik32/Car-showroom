@@ -10,10 +10,19 @@ const checkLocal = () => {
 }
 
 const checkEntry = () => {
-    if(localStorage.getItem('login')) {
+    if(localStorage.getItem('loginpers')) {
         return true;
     } else {
         return false;
+    }
+}
+
+const quit = () => {
+    if(confirm("Are you sure to quit form account?")) {
+        let quit = false;
+        localStorage.setItem('loginpers', JSON.stringify(quit));
+        document.getElementById('mainMenu').classList.add('hidden');
+        document.getElementById('loginNav').classList.remove('hidden');
     }
 }
 
@@ -217,7 +226,7 @@ const savePerson = (user) => {
     } else {
         userData.push(user);
         localStorage.setItem('users', JSON.stringify(userData));
-        localStorage.setItem('login', JSON.stringify(true));
+        // localStorage.setItem('login', JSON.stringify(true));
         while(myNode.firstChild) {
             myNode.removeChild(myNode.firstChild);
         }
@@ -245,9 +254,10 @@ const checkLogin = () => {
         if((usersInfo[i].name === userDatLog.nameLog) && (usersInfo[i].password === userDatLog.passwordLog)) {
             // userDatLog.postlog = usersInfo[i].post;
             // console.log(userDatLog.postlog);
-            // console.log(usersInfo[i].post);
+            // console.log(usersInfo[i]);
             showSignIn();
-            localStorage.setItem('login', JSON.stringify(true));
+            localStorage.setItem('loginpers', JSON.stringify(userDatLog))
+            // localStorage.setItem('login', JSON.stringify(true));
             document.getElementById('welcome').innerHTML = 'Welcome, ' + userDatLog.nameLog;
         }
     }
