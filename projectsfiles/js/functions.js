@@ -10,19 +10,29 @@ const checkLocal = () => {
 }
 
 const checkEntry = () => {
-    if(localStorage.getItem('loginpers')) {
-        return true;
-    } else {
-        return false;
-    }
+    return JSON.parse(localStorage.getItem('loginpers')).entry;
 }
 
 const quit = () => {
     if(confirm("Are you sure to quit form account?")) {
-        let quit = false;
+        let quit = [];
+        // localStorage.setItem('login', JSON.stringify(false));
         localStorage.setItem('loginpers', JSON.stringify(quit));
         document.getElementById('mainMenu').classList.add('hidden');
         document.getElementById('loginNav').classList.remove('hidden');
+    }
+}
+
+const changePost = () => {
+    if(confirm("Are you to change a status?")) {
+        let post = JSON.parse(localStorage.getItem('loginpers')).postlog;
+        let index = JSON.parse(localStorage.getItem('loginpers'));
+        if(post == true) {
+            index.postlog = false;
+        } else {
+            index.postlog = true;
+        }
+        localStorage.setItem('loginpers', JSON.stringify(index));
     }
 }
 
@@ -246,6 +256,7 @@ const checkLogin = () => {
         nameLog: savePersonForm.username.value,
         passwordLog: savePersonForm.password.value,
         postlog: true,
+        entry: true,
     }
 
     usersInfo = JSON.parse(localStorage.getItem('users'));
@@ -289,7 +300,7 @@ function showUsers(){
         parentCrud.appendChild(wrapper);
         wrapper.appendChild(personImg);
         wrapper.appendChild(personName);
-        if(!userDatLog.postlog) {
+        if(!JSON.parse(localStorage.getItem('loginpers')).postlog) {
             showBtn(wrapper, i, parentCrud);
         }
     }
