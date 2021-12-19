@@ -1,8 +1,7 @@
-function User(name, password, age, phone, email, card) {
+function User(name, email, password, products, post) {
     this.name = name;
-    this.password = password;
-    this.age = age;
     this.email = email;
-    this.phone = phone;
-    this.card = card;
+    this.password = password;
+    this.products = products;
+    this.post = post;
 }
