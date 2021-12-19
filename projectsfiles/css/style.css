@@ -640,7 +640,7 @@ a.btn-goback:hover {
 }
 
 .dropdown-content a {
-    background-color: black;
+    background-color: #1f1d19;
     color: rgb(255, 255, 255);
     padding: 10px 10px;
     text-decoration: none;
@@ -648,12 +648,28 @@ a.btn-goback:hover {
     border-radius: 15px;
 }
 
-.dropdown a:hover {
-    background-color: #1f1d19;
+.dropdown-content:hover {
+    background: black;
 }
 
+.paragraph {
+    background-color: #1f1d19;
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 10px;
+    border-radius: 15px;
+}
 
-.show {display: block;}
+.paragraph:hover {
+    background: black;
+}
+
+.show {
+    display: block;
+    
+}
 
 .crud {
     display: flex;
