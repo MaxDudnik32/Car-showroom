@@ -1,5 +1,6 @@
 let mainId;
 let userDatLog;
+let activeCar;
 
 const checkLocal = () => {
     if(localStorage.getItem('users')) {
@@ -50,6 +51,25 @@ const showCRUD = () => {
     showUsers();
 }
 
+const showProducts = () => {
+    console.log('alert')
+
+    const main = document.getElementById('main');
+
+    const productParent = document.createElement('div');
+    // id
+
+    const choseElement = document.createElement('img');
+    choseElement.src = 'images/cars/' + (activeCar+1) + '.png';
+
+    main.appendChild(productParent);
+    productParent.appendChild(choseElement);
+
+    // for(let i = 0; i < cars.length; i++) {
+    //     const choseElement = document.createElement('div')
+    // }
+}
+
 const showCar = () => {
     for(let i = 0; i < cars.length; i++) {
         const logoParent = document.getElementById('logoCar');
@@ -68,6 +88,7 @@ const showCar = () => {
             for(let j = 0; j < cars.length; j++) {
                  if(i === j) {
                      someElement[j].src = 'images/logos/' + 'active' + (j+1) + '.png';
+                     activeCar = i;
                  } else {
                      someElement[j].src = 'images/logos/' + (j+1) + '.png';
                  }
