@@ -52,22 +52,65 @@ const showCRUD = () => {
 }
 
 const showProducts = () => {
-    console.log('alert')
-
     const main = document.getElementById('main');
 
     const productParent = document.createElement('div');
     // id
 
+    const buyParent = document.createElement('div');
+    buyParent.setAttribute('id', 'buyParent')
+    // id
+
     const choseElement = document.createElement('img');
     choseElement.src = 'images/cars/' + (activeCar+1) + '.png';
+    choseElement.addEventListener('click', function() {
+        showProductsDetails(activeCar);
+    })
 
     main.appendChild(productParent);
     productParent.appendChild(choseElement);
+    productParent.appendChild(buyParent);
 
     // for(let i = 0; i < cars.length; i++) {
     //     const choseElement = document.createElement('div')
     // }
+}
+
+const showProductsDetails = (carIndex) => {
+    // alert('AHAHA');
+    const product = cars[carIndex];
+    console.log(product)
+
+    const wrapper = document.getElementById('buyParent');
+    wrapper.innerHTML = "";
+
+    const nameElement = document.createElement('div');
+    nameElement.innerHTML = product.mark;
+    wrapper.appendChild(nameElement);
+    
+    // const priceElement = document.createElement('div');
+    // priceElement.textContent = '$' + product.price;
+    // wrapper.appendChild(priceElement);
+
+    // const countInfo = document.createElement('div');
+    // countInfo.textContent = 'Count of the selected item: ' + product.count;
+    // wrapper.appendChild(countInfo);
+
+    // const countElement = document.createElement('input');
+    // countElement.setAttribute('type', 'text');
+    // countElement.setAttribute('id', 'count');
+    // wrapper.appendChild(countElement);
+
+    // const buyElement = document.createElement('input');
+    // buyElement.setAttribute('type', 'button');
+    // buyElement.setAttribute('value', 'Buy');
+    // buyElement.addEventListener('click', function() {
+    //     showNotification(categoryIndex, productIndex);
+    // })
+    // buyElement.addEventListener('click', function() {
+    //     document.getElementById('form').classList.remove('hidden');
+    // })
+    // wrapper.appendChild(buyElement);
 }
 
 const showCar = () => {
