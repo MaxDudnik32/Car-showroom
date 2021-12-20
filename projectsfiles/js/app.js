@@ -39,6 +39,11 @@ document.getElementById('btn-save').addEventListener('click', function() {
     isValid(checkValid('form-crud'), form, formName2, valid2);
 })
 
+document.getElementById('carPage').addEventListener('click', function() {
+    hideElements();
+    showProducts();
+})
+
 // Dropdown function
 
 /* When the user clicks on the button, 
