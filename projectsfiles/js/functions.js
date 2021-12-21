@@ -1,6 +1,10 @@
+// Initialization
+
 let mainId;
 let userDatLog;
 let activeCar;
+
+// Load
 
 const checkLocal = () => {
     if(localStorage.getItem('users')) {
@@ -9,6 +13,8 @@ const checkLocal = () => {
         return [];
     }
 }
+
+// Drop down
 
 const checkEntry = () => {
     return JSON.parse(localStorage.getItem('loginpers')).entry;
@@ -43,13 +49,14 @@ const changePost = () => {
 const checkStatus = () => {
     let change = document.getElementById('changePost');
     let post = JSON.parse(localStorage.getItem('loginpers')).postlog;
-    console.log(post)
     if(post == false) {
         change.innerHTML = 'Be user';
     } else {
         change.innerHTML = 'Be manager';
     }
 }
+
+// Show Crud
 
 const hideElements = () => {
     const main = document.getElementById('mainCar');
@@ -65,24 +72,32 @@ const showCRUD = () => {
     showUsers();
 }
 
+// Dynamic car
+
 const showProducts = () => {
     const main = document.getElementById('main');
 
     const productParent = document.createElement('div');
+    productParent.setAttribute('id', 'main-products');
     // id
 
-    const buyParent = document.createElement('div');
-    buyParent.setAttribute('id', 'buyParent')
-    // id
+    const imgParents = document.createElement('div');
+    imgParents.setAttribute('id', 'car-elements');
 
     const choseElement = document.createElement('img');
     choseElement.src = 'images/cars/' + (activeCar+1) + '.png';
     choseElement.addEventListener('click', function() {
+        console.log(activeCar);
         showProductsDetails(activeCar);
     })
 
+    const buyParent = document.createElement('div');
+    buyParent.setAttribute('id', 'buy-parent')
+    // id
+
     main.appendChild(productParent);
-    productParent.appendChild(choseElement);
+    productParent.appendChild(imgParents);
+    imgParents.appendChild(choseElement);
     productParent.appendChild(buyParent);
 
     // for(let i = 0; i < cars.length; i++) {
@@ -94,7 +109,7 @@ const showProductsDetails = (carIndex) => {
     // alert('AHAHA');
     const product = cars[carIndex];
 
-    const wrapper = document.getElementById('buyParent');
+    const wrapper = document.getElementById('buy-parent');
     wrapper.innerHTML = "";
 
     const nameElement = document.createElement('div');
@@ -125,6 +140,8 @@ const showProductsDetails = (carIndex) => {
     // })
     // wrapper.appendChild(buyElement);
 }
+
+// Main page car
 
 const showCar = () => {
     for(let i = 0; i < cars.length; i++) {
@@ -164,6 +181,8 @@ const showCar = () => {
         carChild.src = 'images/cars/' + (i+1) + '.png';
     }
 }
+
+// Login Sign Up Form
 
 const showSignForm = () => {
     document.getElementById('form-signin').classList.add('form-signin-left');
@@ -214,6 +233,27 @@ const showSignUp = (valid, form) => {
     }
 }
 
+const showSave = (form) => {
+    form.classList.add('hidden');
+    // document.getElementById('nav').classList.add('nav-up');
+    document.getElementById('form-crud').classList.remove('form-signin');
+    document.getElementById('form-crud').classList.add('form-signup-down'); 
+    document.getElementById('successsave').classList.add('success-left');
+    //document.getElementById('frame').classList.add('frame-long');
+    document.getElementById('crudframe').classList.remove('framecrud');
+    document.getElementById('crudframe').classList.add('frame-short');
+    setTimeout(() => document.getElementById('logoForm').classList.add('hidden'), 3000);
+    document.getElementById('mainMenu').classList.remove('hidden');
+
+    // document.getElementById('nav').classList.toggle('nav-up');
+    // document.getElementById('form-signup').classList.toggle('form-signup-down'); 
+    // document.getElementById('success').classList.toggle('success-left');
+    // //document.getElementById('frame').classList.add('frame-long');
+    // document.getElementById('frame').classList.add('frame-short');
+    // setTimeout(() => document.getElementById('logoForm').classList.add('hidden'), 3000);
+    // document.getElementById('mainMenu').classList.remove('hidden');
+}
+
 const showSignIn = () => {
     document.getElementById('btn-animate').classList.add('btn-animate-grow');
     document.getElementById('welcome').classList.add('welcome-left');
@@ -256,13 +296,17 @@ function isValid(validation, form, formName, valid, checkCrud) {
             post: true,
         }
 
-        // console.log(savePersonForm.username.value);
-
-        // console.log(userDat.password === savePersonForm.confirmpassword.value);
-
         if((isValidName(userDat.name)) && (isValidPassword(userDat.password)) && (isValidEmail(userDat.email))) {
             savePerson(userDat, checkCrud);
-            showSignUp(valid, formName);
+            if(checkCrud) {
+                alert("Succes editings");
+                formName.classList.add('hidden');
+                document.getElementById('crudframe').classList.add('hidden');
+                // console.log("success")
+                // showSave(formName);
+            } else {
+                showSignUp(valid, formName);
+            }
         } else if (!isValidName(userDat.name)) {
             alert("You entered the wrong name");
         } else if (!isValidEmail(userDat.email)) {
@@ -280,35 +324,7 @@ function isValid(validation, form, formName, valid, checkCrud) {
     }
 }
 
-// const saveValid = (userDat) => {
-//     if((isValidName(userDat.name)) && (isValidPassword(userDat.password)) && (isValidEmail(userDat.email))) {
-//         showSignUp();
-//         savePerson(userDat);
-//     } else if (!isValidName(userDat.name)) {
-//         alert("You entered the wrong name");
-//     } else if (!isValidEmail(userDat.email)) {
-//         alert("Your email is incorrect");
-//     } else if (!isValidPassword(userDat.password)) {
-//         alert("In password you need more than 8 elements and one number!");
-//     } else {
-//         alert("You passwords arent correct");
-//     }
-// }
-
-// const infoValid = () => {
-//     if((isValidName(userDat.name)) && (isValidPassword(userDat.password)) && (isValidEmail(userDat.email)) && ((userDat.password === savePersonForm.confirmpassword.value))) {
-//         showSignUp();
-//         savePerson(userDat);
-//     } else if (!isValidName(userDat.name)) {
-//         alert("You entered the wrong name");
-//     } else if (!isValidEmail(userDat.email)) {
-//         alert("Your email is incorrect");
-//     } else if (!isValidPassword(userDat.password)) {
-//         alert("In password you need more than 8 elements and one number!");
-//     } else {
-//         alert("You passwords arent correct");
-//     }
-// }
+// Regular Validation
 
 function isValidName(name) {
     return /^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,})$/.test(name);
@@ -342,11 +358,6 @@ const savePerson = (user, checkCrud) => {
             showUsers();
         }
     }
-
-    //
-
-    // userData.push(user);
-    // localStorage.setItem('users', JSON.stringify(userData));
 }
 
 const checkLogin = () => {
@@ -365,15 +376,12 @@ const checkLogin = () => {
     for(let i = 0; i < usersInfo.length; i++) {
         if((usersInfo[i].name === userDatLog.nameLog) && (usersInfo[i].password === userDatLog.passwordLog)) {
             // userDatLog.postlog = usersInfo[i].post;
-            // console.log(userDatLog.postlog);
-            // console.log(usersInfo[i]);
             showSignIn();
             localStorage.setItem('loginpers', JSON.stringify(userDatLog))
             // localStorage.setItem('login', JSON.stringify(true));
             document.getElementById('welcome').innerHTML = 'Welcome, ' + userDatLog.nameLog;
             check = true;
         }
-        console.log("1 check" + check);
     }
     if(!check) {
         alert("Your login/password are wrong!");
@@ -383,15 +391,21 @@ const checkLogin = () => {
 // CRUD 
 
 function showUsers(){
+    // let previous = document.createElement('a');
+    // previous.classList.add('previous');
+    // previous.innerHTML = `&#8249;`;
+
     let parentCrud = document.getElementById('crud');
 
+    parentCrud.appendChild(previous);
     if(parentCrud === null){
         parentCrud = document.createElement('div')
         parentCrud.setAttribute('id', 'crud') 
         // document.querySelector('body').appendChild(parentCrud)
         document.getElementById('main').appendChild(parentCrud);
     }
-    for(let i=0; i<users.length; i++){
+
+    for(let i=0; i<userData.length; i++){
         const wrapper = document.createElement('div')
         wrapper.setAttribute('data-id', i)
         wrapper.classList.add('user')
@@ -401,7 +415,7 @@ function showUsers(){
         personImg.src='images/unknown.jpg'
 
         let personName = document.createElement('div')
-        personName.innerHTML = `${users[i].name}`
+        personName.innerHTML = `${userData[i].name}`
 
         parentCrud.appendChild(wrapper);
         wrapper.appendChild(personImg);
@@ -421,7 +435,7 @@ function showBtn(wrapper, i, parentCrud){
         view.setAttribute('value', 'view')
         view.addEventListener('click', function(){
             let info = document.createElement('div')
-            info.innerHTML = `${users[i].name} ${users[i].age} years old`
+            info.innerHTML = `${userData[i].name} ${userData[i].age} years old`
             parentCrud.appendChild(info)
         })
 
@@ -432,8 +446,8 @@ function showBtn(wrapper, i, parentCrud){
             if(confirm('Do you want delete this person?')){
                 const id = wrapper.getAttribute('data-id')
                 parentCrud.remove(wrapper)
-                users.splice(id, 1)
-                localStorage.setItem('users',JSON.stringify(users))
+                userData.splice(id, 1)
+                localStorage.setItem('users',JSON.stringify(userData))
                 showUsers();
             }
         })
@@ -447,10 +461,10 @@ function showBtn(wrapper, i, parentCrud){
             document.getElementById('crudframe').classList.remove('hidden');
             form.classList.remove('hidden');
             mainId = wrapper.getAttribute('data-id');
-            document.getElementById('editform').innerHTML = `Edit form of ${users[i].name}`;
-            form.elements.username.value = users[i].name;
-            form.elements.email.value = users[i].email;
-            form.elements.password.value = users[i].password;
+            document.getElementById('editform').innerHTML = `Edit form of ${userData[i].name}`;
+            form.elements.username.value = userData[i].name;
+            form.elements.email.value = userData[i].email;
+            form.elements.password.value = userData[i].password;
         })
 
 
