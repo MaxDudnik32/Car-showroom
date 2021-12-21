@@ -115,6 +115,10 @@ const showProductsDetails = (carIndex) => {
     const nameElement = document.createElement('div');
     nameElement.innerHTML = product.mark;
     wrapper.appendChild(nameElement);
+
+    const example = document.createElement('img');
+    example.src = 'images/details1/1.png';
+    wrapper.appendChild(example);
     
     // const priceElement = document.createElement('div');
     // priceElement.textContent = '$' + product.price;
