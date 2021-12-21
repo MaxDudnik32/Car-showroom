@@ -26,14 +26,28 @@ const quit = () => {
 
 const changePost = () => {
     if(confirm("Are you to change a status?")) {
+        let change = document.getElementById('changePost');
         let post = JSON.parse(localStorage.getItem('loginpers')).postlog;
         let index = JSON.parse(localStorage.getItem('loginpers'));
-        if(post == true) {
-            index.postlog = false;
-        } else {
+        if(post == false) {
             index.postlog = true;
+            change.innerHTML = 'Be manager';
+        } else {
+            index.postlog = false;
+            change.innerHTML = 'Be user';
         }
         localStorage.setItem('loginpers', JSON.stringify(index));
+    }
+}
+
+const checkStatus = () => {
+    let change = document.getElementById('changePost');
+    let post = JSON.parse(localStorage.getItem('loginpers')).postlog;
+    console.log(post)
+    if(post == false) {
+        change.innerHTML = 'Be user';
+    } else {
+        change.innerHTML = 'Be manager';
     }
 }
 
@@ -79,7 +93,6 @@ const showProducts = () => {
 const showProductsDetails = (carIndex) => {
     // alert('AHAHA');
     const product = cars[carIndex];
-    console.log(product)
 
     const wrapper = document.getElementById('buyParent');
     wrapper.innerHTML = "";
@@ -153,13 +166,34 @@ const showCar = () => {
 }
 
 const showSignForm = () => {
-    document.getElementById('form-signin').classList.toggle('form-signin-left');
-    document.getElementById('form-signup').classList.toggle('form-signup-left');
-    document.getElementById('frame').classList.toggle('frame-long');
-    document.getElementById('signup-inactive').classList.toggle('signup-active');
-    document.getElementById('signin-active').classList.toggle('signin-inactive');
-    document.getElementById('forgot').classList.toggle('forgot-left');
+    document.getElementById('form-signin').classList.add('form-signin-left');
+    document.getElementById('form-signup').classList.add('form-signup-left');
+    document.getElementById('frame').classList.add('frame-long');
+    document.getElementById('signup-inactive').classList.remove('signup-inactive');
+    document.getElementById('signup-inactive').classList.add('signup-active');
+    document.getElementById('signin-active').classList.add('signin-inactive');
+    document.getElementById('forgot').classList.add('forgot-left');
     //this.classList.remove("idle").classList.add("active");
+}
+
+const showSignInForm = () => {
+    document.getElementById('form-signin').classList.remove('form-signin-left');
+    document.getElementById('form-signup').classList.remove('form-signup-left');
+    document.getElementById('frame').classList.remove('frame-long');
+    document.getElementById('signup-inactive').classList.remove('signup-active');
+    document.getElementById('signin-active').classList.remove('signin-inactive');
+    document.getElementById('signup-inactive').classList.add('signup-inactive');
+    document.getElementById('signin-active').classList.add('signin-active');
+    document.getElementById('forgot').classList.remove('forgot-left');
+    //this.classList.remove("idle").classList.add("active");
+}
+
+const loadSignIn = () => {
+    document.getElementById('btn-animate').classList.remove('btn-animate-grow');
+    document.getElementById('welcome').classList.remove('welcome-left');
+    document.getElementById('profile-photo').classList.remove('profile-photo-down');
+    document.getElementById('frame').classList.remove('frame-middle');
+    setTimeout(() => document.getElementById('logoForm').classList.remove('hidden'), 3000);
 }
 
 const showSignUp = (valid, form) => {
@@ -211,7 +245,7 @@ function checkValid(formid) {
     return validation;
 }
 
-function isValid(validation, form, formName, valid) {
+function isValid(validation, form, formName, valid, checkCrud) {
     if(validation) {
         const savePersonForm = form.elements;
 
@@ -227,7 +261,7 @@ function isValid(validation, form, formName, valid) {
         // console.log(userDat.password === savePersonForm.confirmpassword.value);
 
         if((isValidName(userDat.name)) && (isValidPassword(userDat.password)) && (isValidEmail(userDat.email))) {
-            savePerson(userDat);
+            savePerson(userDat, checkCrud);
             showSignUp(valid, formName);
         } else if (!isValidName(userDat.name)) {
             alert("You entered the wrong name");
@@ -288,7 +322,7 @@ function isValidEmail(email) {
     return /^((([0-9A-Za-z]{1}[-0-9A-z\.]{1,}[0-9A-Za-z]{1})|([0-9А-Яа-я]{1}[-0-9А-я\.]{1,}[0-9А-Яа-я]{1}))@([-A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,})$/.test(email);
 }
 
-const savePerson = (user) => {
+const savePerson = (user, checkCrud) => {
     let myNode = document.getElementById('crud');
     if(mainId <= userData.length) {
         userData[mainId] = user;
@@ -301,10 +335,12 @@ const savePerson = (user) => {
         userData.push(user);
         localStorage.setItem('users', JSON.stringify(userData));
         // localStorage.setItem('login', JSON.stringify(true));
-        while(myNode.firstChild) {
-            myNode.removeChild(myNode.firstChild);
+        if(checkCrud) {
+            while(myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
+            showUsers();
         }
-        showUsers();
     }
 
     //
@@ -315,6 +351,7 @@ const savePerson = (user) => {
 
 const checkLogin = () => {
     const savePersonForm = document.forms.inForm.elements;
+    let check = false;
 
     userDatLog = {
         nameLog: savePersonForm.username.value,
@@ -334,7 +371,12 @@ const checkLogin = () => {
             localStorage.setItem('loginpers', JSON.stringify(userDatLog))
             // localStorage.setItem('login', JSON.stringify(true));
             document.getElementById('welcome').innerHTML = 'Welcome, ' + userDatLog.nameLog;
+            check = true;
         }
+        console.log("1 check" + check);
+    }
+    if(!check) {
+        alert("Your login/password are wrong!");
     }
 }
 
