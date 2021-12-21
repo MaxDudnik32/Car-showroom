@@ -1,20 +1,22 @@
 const userData = checkLocal();
-console.log(checkEntry())
+// console.log(checkEntry());
 if(checkEntry() == true) {
     document.getElementById('mainMenu').classList.remove('hidden');
     document.getElementById('loginNav').classList.add('hidden');
 }
 showCar();
+checkStatus();
 
 // Form
 
 document.getElementById('login').addEventListener('click', function() {
     document.getElementById('logoForm').classList.remove('hidden');
     document.getElementById('loginNav').classList.add('hidden');
+    loadSignIn();
 })
 
 document.getElementById('btnin').addEventListener('click', function() {
-    showSignForm();
+    showSignInForm();
 })
 
 document.getElementById('btnup').addEventListener('click', function() {
@@ -25,7 +27,7 @@ document.getElementById('btn-signup').addEventListener('click', function() {
     const formName1 = document.getElementById('form-signup')
     const valid1 = true;
     const form = document.forms.upForm;
-    isValid(checkValid('form-signup'), form, formName1, valid1);
+    isValid(checkValid('form-signup'), form, formName1, valid1, false);
 })
 
 document.getElementById('btn-signin').addEventListener('click', function() {
@@ -36,7 +38,7 @@ document.getElementById('btn-save').addEventListener('click', function() {
     const formName2 = document.getElementById('form-crud')
     const valid2 = false;
     const form = document.forms.saveForm;
-    isValid(checkValid('form-crud'), form, formName2, valid2);
+    isValid(checkValid('form-crud'), form, formName2, valid2, true);
 })
 
 document.getElementById('carPage').addEventListener('click', function() {
