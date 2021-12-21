@@ -1,8 +1,10 @@
 const cars = [
-    new Car1('Bmw', 'EX5', 'motor'),
-    new Car1('Volvo', 'S60', 'motor'),
-    new Car1('Mazda', 'S60', 'motor'),
-    new Car1('Hundai', 'S60', 'motor'),
-    new Car1('Chevrolet', 'S60', 'motor'),
-    new Car1('Mercedes', 'S60', 'motor'),
+    new Car('Bmw',[
+        new Details('M3', 40000, 15),
+    ]),
+    new Car('Volvo',),
+    new Car('Mazda',),
+    new Car('Hundai',),
+    new Car('Chevrolet',),
+    new Car('Mercedes',),
 ]
