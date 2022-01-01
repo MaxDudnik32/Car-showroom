@@ -69,16 +69,16 @@ const hideElements = () => {
 
 const showCRUD = () => {
     hideElements();
-    showUsers();
+    showUsers(true);
 }
 
 // Dynamic car
 
 const showProducts = () => {
+    // console.log(activeCar);
     const main = document.getElementById('main');
 
-    const productParent = document.createElement('div');
-    productParent.setAttribute('id', 'main-products');
+    const productParent = document.getElementById('main-products');
     // id
 
     const imgParents = document.createElement('div');
@@ -87,17 +87,22 @@ const showProducts = () => {
     const choseElement = document.createElement('img');
     choseElement.src = 'images/cars/' + (activeCar+1) + '.png';
     choseElement.addEventListener('click', function() {
-        console.log(activeCar);
-        showProductsDetails(activeCar);
+        showProductsDetails(activeCar, 0);
+    })
+
+    const example = document.createElement('img');
+    example.src = 'images/details1/1.png';
+    example.addEventListener('click', function() {
+        showProductsDetails(activeCar, 1);
     })
 
     const buyParent = document.createElement('div');
     buyParent.setAttribute('id', 'buy-parent')
     // id
 
-    main.appendChild(productParent);
     productParent.appendChild(imgParents);
     imgParents.appendChild(choseElement);
+    imgParents.appendChild(example);
     productParent.appendChild(buyParent);
 
     // for(let i = 0; i < cars.length; i++) {
@@ -105,20 +110,45 @@ const showProducts = () => {
     // }
 }
 
-const showProductsDetails = (carIndex) => {
+const showProductsDetails = (carIndex, elementToBuy) => {
     // alert('AHAHA');
     const product = cars[carIndex];
+    const choseCarElement = product.details[elementToBuy];
 
     const wrapper = document.getElementById('buy-parent');
     wrapper.innerHTML = "";
 
     const nameElement = document.createElement('div');
-    nameElement.innerHTML = product.mark;
+    nameElement.innerHTML = product.mark + " " + choseCarElement.name;
     wrapper.appendChild(nameElement);
 
-    const example = document.createElement('img');
-    example.src = 'images/details1/1.png';
-    wrapper.appendChild(example);
+    const priceElement = document.createElement('div');
+    priceElement.innerHTML = "The price of this item is: " + choseCarElement.price + "$";
+    wrapper.appendChild(priceElement);
+
+    const amountElement = document.createElement('div');
+    amountElement.innerHTML = "The amount of this item is: " + choseCarElement.count + " items";
+    wrapper.appendChild(amountElement);
+
+    const buyAmount = document.createElement('input');
+    buyAmount.setAttribute('type', 'text');
+    buyAmount.setAttribute('id', 'example');
+    wrapper.appendChild(buyAmount);
+
+    const buyButton = document.createElement('input');
+    buyButton.setAttribute('type', 'button');
+    buyButton.setAttribute('value', 'Buy');
+    buyButton.setAttribute('id', 'buyButton');
+    buyButton.addEventListener('click', function() {
+        // console.log(document.getElementById('example').value);
+        if(document.getElementById('example').value < choseCarElement.count) {
+            // alert('Congrat');
+            showUsers(false);
+        } else {
+            alert('You have choosen to much items')
+        }
+    })
+    wrapper.appendChild(buyButton);
     
     // const priceElement = document.createElement('div');
     // priceElement.textContent = '$' + product.price;
@@ -350,7 +380,7 @@ const savePerson = (user, checkCrud) => {
         while(myNode.firstChild) {
             myNode.removeChild(myNode.firstChild);
         }
-        showUsers();
+        showUsers(true);
     } else {
         userData.push(user);
         localStorage.setItem('users', JSON.stringify(userData));
@@ -359,7 +389,7 @@ const savePerson = (user, checkCrud) => {
             while(myNode.firstChild) {
                 myNode.removeChild(myNode.firstChild);
             }
-            showUsers();
+            showUsers(true);
         }
     }
 }
@@ -394,14 +424,14 @@ const checkLogin = () => {
 
 // CRUD 
 
-function showUsers(){
+function showUsers(selectUser){
     // let previous = document.createElement('a');
     // previous.classList.add('previous');
     // previous.innerHTML = `&#8249;`;
 
     let parentCrud = document.getElementById('crud');
 
-    parentCrud.appendChild(previous);
+    // parentCrud.appendChild(previous);
     if(parentCrud === null){
         parentCrud = document.createElement('div')
         parentCrud.setAttribute('id', 'crud') 
@@ -409,29 +439,61 @@ function showUsers(){
         document.getElementById('main').appendChild(parentCrud);
     }
 
+    console.log(userData)
+
     for(let i=0; i<userData.length; i++){
         const wrapper = document.createElement('div')
         wrapper.setAttribute('data-id', i)
         wrapper.classList.add('user')
 
-        let personImg = document.createElement('img')
-        personImg.classList.add('image')
-        personImg.src='images/unknown.jpg'
-
         let personName = document.createElement('div')
         personName.innerHTML = `${userData[i].name}`
 
+        let checkparent = document.createElement('div');
+        checkparent.setAttribute('data-btn', i);
+        wrapper.appendChild(checkparent);
+        // console.log(checkparent);
+
         parentCrud.appendChild(wrapper);
-        wrapper.appendChild(personImg);
         wrapper.appendChild(personName);
-        if(!JSON.parse(localStorage.getItem('loginpers')).postlog) {
-            showBtn(wrapper, i, parentCrud);
+        if(selectUser) {
+            let personImg = document.createElement('img');
+            personImg.classList.add('image');
+            personImg.src='images/unknown.jpg';
+            wrapper.appendChild(personImg);
+            if(!JSON.parse(localStorage.getItem('loginpers')).postlog) {
+                showBtn(wrapper, i, parentCrud);
+            }
+        } else {
+            const check = document.createElement('input');
+            check.setAttribute('type', 'radio');
+            check.setAttribute('name', 'radio');
+            checkparent.appendChild(check);
+
+            // const example = document.createElement('input');
+            // example.setAttribute('type', 'button');
+            // example.setAttribute('value', 'example');
+            const checkButtons = document.getElementById('buyButton');
+            checkButtons.addEventListener('click', function() {
+                console.log(check.checked);
+                if(check.checked) {
+                    console.log(i);
+                }
+            })
+            // checkparent.appendChild(example);
+
+            // const wantProduct = document.createElement('div');
+            // wantProduct.innerHTML = users[i].products;
+            // checkparent.appendChild(wantProduct);
+
+            // console.log(users[0].products);
         }
     }
 }
 
 function showBtn(wrapper, i, parentCrud){
-    let btnparent = document.createElement('div');
+        let btnparent = document.createElement('div');
+        btnparent.setAttribute('data-btn', i);
         btnparent.classList.add('button')
 
         let view = document.createElement('input')
@@ -452,7 +514,7 @@ function showBtn(wrapper, i, parentCrud){
                 parentCrud.remove(wrapper)
                 userData.splice(id, 1)
                 localStorage.setItem('users',JSON.stringify(userData))
-                showUsers();
+                showUsers(true);
             }
         })
 
@@ -471,9 +533,17 @@ function showBtn(wrapper, i, parentCrud){
             form.elements.password.value = userData[i].password;
         })
 
-
         wrapper.appendChild(btnparent);
         btnparent.appendChild(view);
         btnparent.appendChild(remove);
         btnparent.appendChild(edit);
 }
+
+// const showCheck = () => {
+//     const parentCheck = document.getElementById('btnparent');
+//     console.log(parentCheck);
+
+//     const check = document.createElement('input');
+//     check.setAttribute('type', 'radio');
+//     parentCheck.appendChild(check);
+// }
