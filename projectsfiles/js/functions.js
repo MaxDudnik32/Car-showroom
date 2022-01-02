@@ -69,31 +69,34 @@ const hideElements = () => {
 
 const showCRUD = () => {
     hideElements();
-    showUsers(true);
+    showUsers();
 }
 
 // Dynamic car
 
 const showProducts = () => {
-    // console.log(activeCar);
     const main = document.getElementById('main');
 
     const productParent = document.getElementById('main-products');
+    productParent.classList.add('main-products');
     // id
 
     const imgParents = document.createElement('div');
     imgParents.setAttribute('id', 'car-elements');
+    imgParents.classList.add('car-elements');
 
     const choseElement = document.createElement('img');
     choseElement.src = 'images/cars/' + (activeCar+1) + '.png';
     choseElement.addEventListener('click', function() {
         showProductsDetails(activeCar, 0);
+        showUsersToSelect();
     })
 
     const example = document.createElement('img');
     example.src = 'images/details1/1.png';
     example.addEventListener('click', function() {
         showProductsDetails(activeCar, 1);
+        showUsersToSelect();
     })
 
     const buyParent = document.createElement('div');
@@ -140,12 +143,22 @@ const showProductsDetails = (carIndex, elementToBuy) => {
     buyButton.setAttribute('value', 'Buy');
     buyButton.setAttribute('id', 'buyButton');
     buyButton.addEventListener('click', function() {
-        // console.log(document.getElementById('example').value);
-        if(document.getElementById('example').value < choseCarElement.count) {
+        const radioBtn = document.querySelectorAll('[name*="radio"]');
+        let radioCheck = false;
+        let selectedPerson;
+        for(let i in radioBtn) {
+            if(radioBtn[i].checked) {
+                radioCheck = true;
+                selectedPerson = i;
+            }    
+        }
+        if(document.getElementById('example').value > choseCarElement.count) {
             // alert('Congrat');
-            showUsers(false);
+            alert('You have choosen to much items');
+        } else if(radioCheck != true) {
+            alert('You need to choose user!');
         } else {
-            alert('You have choosen to much items')
+            showBuyInfo(product, choseCarElement, selectedPerson);
         }
     })
     wrapper.appendChild(buyButton);
@@ -173,6 +186,58 @@ const showProductsDetails = (carIndex, elementToBuy) => {
     //     document.getElementById('form').classList.remove('hidden');
     // })
     // wrapper.appendChild(buyElement);
+}
+
+const showUsersToSelect = () => {
+    const checkParents = document.createElement('div');
+    checkParents.classList.add('selected-parents');
+
+    let parentUsersToSelect = document.getElementById('main-products');
+    parentUsersToSelect.appendChild(checkParents);
+    // if(parentUsersToSelect === null){
+    //     parentUsersToSelect = document.createElement('div')
+    //     parentUsersToSelect.setAttribute('id', 'crud') 
+    //     // document.querySelector('body').appendChild(parentCrud)
+    //     document.getElementById('main').appendChild(parentCrud);
+    // }
+
+    for(let i=0; i<userData.length; i++){
+        const wrapper = document.createElement('div')
+        wrapper.setAttribute('data-id', i)
+        wrapper.classList.add('user')
+
+        let personName = document.createElement('div')
+        personName.innerHTML = `${userData[i].name}`
+
+        let checkparent = document.createElement('div');
+        checkparent.setAttribute('data-btn', i);
+        wrapper.appendChild(checkparent);
+
+        checkParents.appendChild(wrapper);
+        wrapper.appendChild(personName);
+
+        const check = document.createElement('input');
+        check.setAttribute('type', 'radio');
+        check.setAttribute('name', 'radio');
+        checkparent.appendChild(check);
+    }
+}
+
+const showBuyInfo = (product, choseCarElement, selectedPerson) => {
+    const buyInfo = document.getElementById('show-buy-info');
+    buyInfo.classList.remove('hidden');
+
+    const elementInfo = document.createElement('div');
+    elementInfo.innerHTML = "You have choosen " + product.mark + " car to buy " + choseCarElement.name;
+    buyInfo.appendChild(elementInfo);
+
+    const costElement = document.createElement('div');
+    costElement.innerHTML = "Transaction price is: " + choseCarElement.price + "$ * " + document.getElementById('example').value + "items = " + (choseCarElement.price * document.getElementById('example').value) + "$"; 
+    buyInfo.appendChild(costElement);
+
+    const choosePerson = document.createElement('div');
+    choosePerson.innerHTML = "You want to sell it to " + userData[selectedPerson].name;
+    buyInfo.appendChild(choosePerson); 
 }
 
 // Main page car
@@ -336,7 +401,6 @@ function isValid(validation, form, formName, valid, checkCrud) {
                 alert("Succes editings");
                 formName.classList.add('hidden');
                 document.getElementById('crudframe').classList.add('hidden');
-                // console.log("success")
                 // showSave(formName);
             } else {
                 showSignUp(valid, formName);
@@ -380,7 +444,7 @@ const savePerson = (user, checkCrud) => {
         while(myNode.firstChild) {
             myNode.removeChild(myNode.firstChild);
         }
-        showUsers(true);
+        showUsers();
     } else {
         userData.push(user);
         localStorage.setItem('users', JSON.stringify(userData));
@@ -389,7 +453,7 @@ const savePerson = (user, checkCrud) => {
             while(myNode.firstChild) {
                 myNode.removeChild(myNode.firstChild);
             }
-            showUsers(true);
+            showUsers();
         }
     }
 }
@@ -424,22 +488,15 @@ const checkLogin = () => {
 
 // CRUD 
 
-function showUsers(selectUser){
-    // let previous = document.createElement('a');
-    // previous.classList.add('previous');
-    // previous.innerHTML = `&#8249;`;
-
+function showUsers() {
     let parentCrud = document.getElementById('crud');
 
-    // parentCrud.appendChild(previous);
     if(parentCrud === null){
         parentCrud = document.createElement('div')
         parentCrud.setAttribute('id', 'crud') 
         // document.querySelector('body').appendChild(parentCrud)
         document.getElementById('main').appendChild(parentCrud);
     }
-
-    console.log(userData)
 
     for(let i=0; i<userData.length; i++){
         const wrapper = document.createElement('div')
@@ -452,42 +509,17 @@ function showUsers(selectUser){
         let checkparent = document.createElement('div');
         checkparent.setAttribute('data-btn', i);
         wrapper.appendChild(checkparent);
-        // console.log(checkparent);
 
         parentCrud.appendChild(wrapper);
         wrapper.appendChild(personName);
-        if(selectUser) {
-            let personImg = document.createElement('img');
-            personImg.classList.add('image');
-            personImg.src='images/unknown.jpg';
-            wrapper.appendChild(personImg);
-            if(!JSON.parse(localStorage.getItem('loginpers')).postlog) {
-                showBtn(wrapper, i, parentCrud);
-            }
-        } else {
-            const check = document.createElement('input');
-            check.setAttribute('type', 'radio');
-            check.setAttribute('name', 'radio');
-            checkparent.appendChild(check);
 
-            // const example = document.createElement('input');
-            // example.setAttribute('type', 'button');
-            // example.setAttribute('value', 'example');
-            const checkButtons = document.getElementById('buyButton');
-            checkButtons.addEventListener('click', function() {
-                console.log(check.checked);
-                if(check.checked) {
-                    console.log(i);
-                }
-            })
-            // checkparent.appendChild(example);
-
-            // const wantProduct = document.createElement('div');
-            // wantProduct.innerHTML = users[i].products;
-            // checkparent.appendChild(wantProduct);
-
-            // console.log(users[0].products);
-        }
+        let personImg = document.createElement('img');
+        personImg.classList.add('image');
+        personImg.src='images/unknown.jpg';
+        wrapper.appendChild(personImg);
+        if(!JSON.parse(localStorage.getItem('loginpers')).postlog) {
+            showBtn(wrapper, i, parentCrud);
+        }        
     }
 }
 
