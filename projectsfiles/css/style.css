@@ -760,11 +760,11 @@ a.btn-goback:hover {
     position: absolute;
     left: 25%;
     top: 15%;
-    height: 575px;
+    height: 366px;
     width: 800px;
     background:
             linear-gradient(
-                    rgba(255, 255, 255, 0.75),
+                    rgba(255, 255, 255, 0.95),
                     rgba(255, 255, 255, 0.95)),
             no-repeat center center;
     background-size: cover;
@@ -777,6 +777,36 @@ a.btn-goback:hover {
     transition: all .5s ease;
 }
 
+.chose-car-flex {
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+}
+
 .opacity {
     opacity: 0.9;
+}
+
+.charElements {
+    max-width: 25%;
+    padding: 20px 0;
+}
+
+.char-car-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.get-info {
+    color: white;
+    margin: 50px 0;
+    padding: 5px 25px;
+    background: #135ec5;
+    position: relative;
+    border-radius: 15px;
+}
+
+.motor-detail {
+    max-width: 17%;
+    margin-left: 25px;
 }
