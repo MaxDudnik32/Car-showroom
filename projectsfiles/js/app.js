@@ -41,6 +41,15 @@ document.getElementById('btn-save').addEventListener('click', function() {
     isValid(checkValid('form-crud'), form, formName2, valid2, true);
 })
 
+// Previous page 
+
+document.getElementById('previous').addEventListener('click', function() {
+    unhideElements();
+    document.getElementById('previous').classList.add('hidden');
+    document.getElementById('main-products').classList.remove('main-products');
+    document.getElementById('main-products').classList.add('hidden');
+})
+
 // Car page
 
 document.getElementById('carPage').addEventListener('click', function() {
