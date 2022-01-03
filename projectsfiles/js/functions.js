@@ -72,6 +72,54 @@ const showCRUD = () => {
     showUsers();
 }
 
+// Character car 
+
+const charCar = () => {
+    const charParent = document.getElementById('chose-car');
+    charParent.innerHTML = "";
+
+    const charCarWrap = document.createElement('div');
+    charCarWrap.classList.add('char-car-wrapper');
+    charParent.appendChild(charCarWrap);
+
+    const carElement = document.createElement('img');
+    carElement.src = 'images/cars/' + (activeCar+1) + '.png';
+    carElement.classList.add('charElements');
+    charCarWrap.appendChild(carElement);
+
+    const carInfoBtn = document.createElement('a');
+    carInfoBtn.classList.add('get-info');
+    carInfoBtn.innerHTML = 'Get more info';
+    carInfoBtn.addEventListener('click', function() {
+        charParent.classList.add('hidden');
+        charParent.classList.remove('chose-car-flex');
+        document.getElementById('header').classList.remove('opacity');
+        document.getElementById('main').classList.remove('opacity');
+    })
+    charCarWrap.appendChild(carInfoBtn);
+
+    const charMotorWrap = document.createElement('div');
+    charMotorWrap.classList.add('char-car-wrapper');
+    charParent.appendChild(charMotorWrap);
+
+    const motorElement = document.createElement('img');
+    motorElement.src = 'images/details1/1.png';
+    motorElement.classList.add('charElements');
+    motorElement.classList.add('motor-detail');
+    charMotorWrap.appendChild(motorElement);
+
+    const motorInfoBtn = document.createElement('a');
+    motorInfoBtn.classList.add('get-info');
+    motorInfoBtn.innerHTML = 'Get more info';
+    motorInfoBtn.addEventListener('click', function() {
+        charParent.classList.add('hidden');
+        charParent.classList.remove('chose-car-flex');
+        document.getElementById('header').classList.remove('opacity');
+        document.getElementById('main').classList.remove('opacity');
+    })
+    charMotorWrap.appendChild(motorInfoBtn);
+}
+
 // Dynamic car
 
 const showProducts = () => {
