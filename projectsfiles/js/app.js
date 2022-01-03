@@ -1,5 +1,5 @@
 const userData = checkLocal();
-// console.log(checkEntry());
+
 if(checkEntry() == true) {
     document.getElementById('mainMenu').classList.remove('hidden');
     document.getElementById('loginNav').classList.add('hidden');
@@ -36,18 +36,27 @@ document.getElementById('btn-signin').addEventListener('click', function() {
 
 document.getElementById('btn-save').addEventListener('click', function() {
     const formName2 = document.getElementById('form-crud');
-    // const formName2 = document.getElementById('form-signup');
     const valid2 = false;
     const form = document.forms.saveForm;
-    // const form = document.forms.upForm;
     isValid(checkValid('form-crud'), form, formName2, valid2, true);
 })
 
 // Car page
 
 document.getElementById('carPage').addEventListener('click', function() {
-    hideElements();
-    showProducts();
+    document.getElementById('chose-car').classList.remove('hidden');
+    document.getElementById('header').classList.add('opacity');
+    document.getElementById('main').classList.add('opacity');
+    // if(checkEntry() === true) {
+    //     if(activeCar !== undefined) {
+    //         hideElements();
+    //         showProducts();
+    //     } else {
+    //         alert("You need to choose the car!");
+    //     }
+    // } else {
+    //     alert("Please login to use our website!");
+    // }
 })
 
 // Dropdown function
