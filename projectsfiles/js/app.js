@@ -44,9 +44,19 @@ document.getElementById('btn-save').addEventListener('click', function() {
 // Car page
 
 document.getElementById('carPage').addEventListener('click', function() {
-    document.getElementById('chose-car').classList.remove('hidden');
-    document.getElementById('header').classList.add('opacity');
-    document.getElementById('main').classList.add('opacity');
+    if(checkEntry() === true) {
+        if(activeCar !== undefined) {
+            document.getElementById('chose-car').classList.remove('hidden');
+            document.getElementById('chose-car').classList.add('chose-car-flex');
+            document.getElementById('header').classList.add('opacity');
+            document.getElementById('main').classList.add('opacity');
+            charCar();
+        } else {
+            alert("You need to choose the car!");
+        }    
+    } else {
+        alert("Please login to use our website!");
+    }
     // if(checkEntry() === true) {
     //     if(activeCar !== undefined) {
     //         hideElements();
