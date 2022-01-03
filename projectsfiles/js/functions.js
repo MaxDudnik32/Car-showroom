@@ -67,6 +67,15 @@ const hideElements = () => {
     mainBtn.classList.add('hidden');
 }
 
+const unhideElements = () => {
+    const main = document.getElementById('mainCar');
+    const mainBtn = document.getElementById('carPage');
+    main.classList.add('mainCar');
+    main.classList.remove('hidden');
+    mainBtn.classList.add('carPage');
+    mainBtn.classList.remove('hidden');
+}
+
 const showCRUD = () => {
     hideElements();
     showUsers();
@@ -95,6 +104,12 @@ const charCar = () => {
         charParent.classList.remove('chose-car-flex');
         document.getElementById('header').classList.remove('opacity');
         document.getElementById('main').classList.remove('opacity');
+        hideElements();
+        showProductInfo(true);
+        showProductsDetails(activeCar, 0);
+        document.getElementById('selected-parents').innerHTML = "";
+        showUsersToSelect();
+        document.getElementById('previous').classList.remove('hidden')
     })
     charCarWrap.appendChild(carInfoBtn);
 
@@ -116,39 +131,44 @@ const charCar = () => {
         charParent.classList.remove('chose-car-flex');
         document.getElementById('header').classList.remove('opacity');
         document.getElementById('main').classList.remove('opacity');
+        hideElements();
+        showProductInfo(false);
+        showProductsDetails(activeCar, 1);
+        document.getElementById('selected-parents').innerHTML = "";
+        showUsersToSelect();
+        document.getElementById('previous').classList.remove('hidden')
     })
     charMotorWrap.appendChild(motorInfoBtn);
 }
 
 // Dynamic car
 
-const showProducts = () => {
-    
+const showProductInfo = (checkInfo) => {
     const main = document.getElementById('main');
 
     const productParent = document.getElementById('main-products');
     productParent.classList.add('main-products');
+    productParent.innerHTML = "";
     // id
 
     const imgParents = document.createElement('div');
     imgParents.setAttribute('id', 'car-elements');
     imgParents.classList.add('car-elements');
+    console.log(document.getElementById('car-elements'));
 
-    const choseElement = document.createElement('img');
-    choseElement.src = 'images/cars/' + (activeCar+1) + '.png';
-    choseElement.addEventListener('click', function() {
-        showProductsDetails(activeCar, 0);
-        document.getElementById('selected-parents').innerHTML = "";
-        showUsersToSelect();
-    })
+    const infoCar = document.getElementById('info-car');
 
-    const example = document.createElement('img');
-    example.src = 'images/details1/1.png';
-    example.addEventListener('click', function() {
-        showProductsDetails(activeCar, 1);
-        document.getElementById('selected-parents').innerHTML = "";
-        showUsersToSelect();
-    })
+    if(checkInfo) {
+        const choseElement = document.createElement('img');
+        choseElement.src = 'images/cars/' + (activeCar+1) + '.png';
+        imgParents.appendChild(choseElement);
+        infoCar.innerHTML = cars[activeCar].mark + " car " + cars[activeCar].details[0].name;
+    } else { 
+        const motorChoseElement = document.createElement('img');
+        motorChoseElement.src = 'images/details1/1.png';
+        imgParents.appendChild(motorChoseElement);
+        infoCar.innerHTML = cars[activeCar].mark + " car " + cars[activeCar].details[1].name + " detail";
+    }
 
     const buyParent = document.createElement('div');
     buyParent.setAttribute('id', 'buy-parent');
@@ -156,12 +176,51 @@ const showProducts = () => {
     const checkParents = document.createElement('div');
     checkParents.setAttribute('id', 'selected-parents');
 
+    
     productParent.appendChild(imgParents);
-    imgParents.appendChild(choseElement);
-    imgParents.appendChild(example);
     productParent.appendChild(buyParent);
     productParent.appendChild(checkParents);
 }
+
+// const showProducts = () => {
+//     const main = document.getElementById('main');
+
+//     const productParent = document.getElementById('main-products');
+//     productParent.classList.add('main-products');
+//     // id
+
+//     const imgParents = document.createElement('div');
+//     imgParents.setAttribute('id', 'car-elements');
+//     imgParents.classList.add('car-elements');
+
+//     const choseElement = document.createElement('img');
+//     choseElement.src = 'images/cars/' + (activeCar+1) + '.png';
+//     choseElement.addEventListener('click', function() {
+//         showProductsDetails(activeCar, 0);
+//         document.getElementById('selected-parents').innerHTML = "";
+//         showUsersToSelect();
+//     })
+
+//     const example = document.createElement('img');
+//     example.src = 'images/details1/1.png';
+//     example.addEventListener('click', function() {
+//         showProductsDetails(activeCar, 1);
+//         document.getElementById('selected-parents').innerHTML = "";
+//         showUsersToSelect();
+//     })
+
+//     const buyParent = document.createElement('div');
+//     buyParent.setAttribute('id', 'buy-parent');
+
+//     const checkParents = document.createElement('div');
+//     checkParents.setAttribute('id', 'selected-parents');
+
+//     productParent.appendChild(imgParents);
+//     imgParents.appendChild(choseElement);
+//     imgParents.appendChild(example);
+//     productParent.appendChild(buyParent);
+//     productParent.appendChild(checkParents);
+// }
 
 const showProductsDetails = (carIndex, elementToBuy) => {
     const product = cars[carIndex];
