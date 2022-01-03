@@ -75,6 +75,7 @@ const showCRUD = () => {
 // Dynamic car
 
 const showProducts = () => {
+    
     const main = document.getElementById('main');
 
     const productParent = document.getElementById('main-products');
@@ -89,6 +90,7 @@ const showProducts = () => {
     choseElement.src = 'images/cars/' + (activeCar+1) + '.png';
     choseElement.addEventListener('click', function() {
         showProductsDetails(activeCar, 0);
+        document.getElementById('selected-parents').innerHTML = "";
         showUsersToSelect();
     })
 
@@ -96,29 +98,29 @@ const showProducts = () => {
     example.src = 'images/details1/1.png';
     example.addEventListener('click', function() {
         showProductsDetails(activeCar, 1);
+        document.getElementById('selected-parents').innerHTML = "";
         showUsersToSelect();
     })
 
     const buyParent = document.createElement('div');
-    buyParent.setAttribute('id', 'buy-parent')
-    // id
+    buyParent.setAttribute('id', 'buy-parent');
+
+    const checkParents = document.createElement('div');
+    checkParents.setAttribute('id', 'selected-parents');
 
     productParent.appendChild(imgParents);
     imgParents.appendChild(choseElement);
     imgParents.appendChild(example);
     productParent.appendChild(buyParent);
-
-    // for(let i = 0; i < cars.length; i++) {
-    //     const choseElement = document.createElement('div')
-    // }
+    productParent.appendChild(checkParents);
 }
 
 const showProductsDetails = (carIndex, elementToBuy) => {
-    // alert('AHAHA');
     const product = cars[carIndex];
     const choseCarElement = product.details[elementToBuy];
 
     const wrapper = document.getElementById('buy-parent');
+    wrapper.classList.remove('hidden');
     wrapper.innerHTML = "";
 
     const nameElement = document.createElement('div');
@@ -162,44 +164,24 @@ const showProductsDetails = (carIndex, elementToBuy) => {
         }
     })
     wrapper.appendChild(buyButton);
-    
-    // const priceElement = document.createElement('div');
-    // priceElement.textContent = '$' + product.price;
-    // wrapper.appendChild(priceElement);
-
-    // const countInfo = document.createElement('div');
-    // countInfo.textContent = 'Count of the selected item: ' + product.count;
-    // wrapper.appendChild(countInfo);
-
-    // const countElement = document.createElement('input');
-    // countElement.setAttribute('type', 'text');
-    // countElement.setAttribute('id', 'count');
-    // wrapper.appendChild(countElement);
-
-    // const buyElement = document.createElement('input');
-    // buyElement.setAttribute('type', 'button');
-    // buyElement.setAttribute('value', 'Buy');
-    // buyElement.addEventListener('click', function() {
-    //     showNotification(categoryIndex, productIndex);
-    // })
-    // buyElement.addEventListener('click', function() {
-    //     document.getElementById('form').classList.remove('hidden');
-    // })
-    // wrapper.appendChild(buyElement);
 }
 
 const showUsersToSelect = () => {
-    const checkParents = document.createElement('div');
-    checkParents.classList.add('selected-parents');
+    const checkParentss = document.getElementById('selected-parents');
+
+    checkParentss.classList.remove('hidden');
+    checkParentss.classList.add('selected-parents');
 
     let parentUsersToSelect = document.getElementById('main-products');
-    parentUsersToSelect.appendChild(checkParents);
-    // if(parentUsersToSelect === null){
-    //     parentUsersToSelect = document.createElement('div')
-    //     parentUsersToSelect.setAttribute('id', 'crud') 
-    //     // document.querySelector('body').appendChild(parentCrud)
-    //     document.getElementById('main').appendChild(parentCrud);
-    // }
+    parentUsersToSelect.appendChild(checkParentss);
+
+    let sellUserInfo = document.createElement('div');
+    if(JSON.parse(localStorage.getItem('loginpers')).postlog) {
+        sellUserInfo.innerHTML = "Choose person from whom you want to buy it" ;
+    } else {
+        sellUserInfo.innerHTML = "Choose person to whom you want to sell it";
+    }
+    checkParentss.appendChild(sellUserInfo);
 
     for(let i=0; i<userData.length; i++){
         const wrapper = document.createElement('div')
@@ -213,7 +195,7 @@ const showUsersToSelect = () => {
         checkparent.setAttribute('data-btn', i);
         wrapper.appendChild(checkparent);
 
-        checkParents.appendChild(wrapper);
+        checkParentss.appendChild(wrapper);
         wrapper.appendChild(personName);
 
         const check = document.createElement('input');
@@ -237,7 +219,36 @@ const showBuyInfo = (product, choseCarElement, selectedPerson) => {
 
     const choosePerson = document.createElement('div');
     choosePerson.innerHTML = "You want to sell it to " + userData[selectedPerson].name;
-    buyInfo.appendChild(choosePerson); 
+    buyInfo.appendChild(choosePerson);
+
+    const buyBtnWrapper = document.createElement('div');
+    buyBtnWrapper.classList.add('btn-animate');
+    buyInfo.appendChild(buyBtnWrapper);
+    
+    const buyBtn = document.createElement('a');
+    buyBtn.innerHTML = 'Buy';
+    buyBtn.classList.add('btn-signin');
+    buyBtn.addEventListener('click', function() {
+        saveOrder(selectedPerson, choseCarElement.name, document.getElementById('example').value);
+    })
+    buyBtnWrapper.appendChild(buyBtn);
+}
+
+const saveOrder = (person, product, count) => {
+    let order = [product, count];
+    let mainUsers = JSON.parse(localStorage.getItem('users'));
+    let currentOrder = mainUsers[person].order;
+    if(currentOrder === undefined) {
+        mainUsers[person].order = [order];
+        alert("You have selled " + product + " to " + mainUsers[person].name);
+    } else {
+        currentOrder.push(order);
+        alert("You have selled " + product + " to " + mainUsers[person].name);
+    }
+    localStorage.setItem('users', JSON.stringify(mainUsers));
+    document.getElementById('show-buy-info').classList.add('hidden');
+    document.getElementById('buy-parent').classList.add('hidden');
+    document.getElementById('selected-parents').classList.add('hidden');
 }
 
 // Main page car
@@ -570,12 +581,3 @@ function showBtn(wrapper, i, parentCrud){
         btnparent.appendChild(remove);
         btnparent.appendChild(edit);
 }
-
-// const showCheck = () => {
-//     const parentCheck = document.getElementById('btnparent');
-//     console.log(parentCheck);
-
-//     const check = document.createElement('input');
-//     check.setAttribute('type', 'radio');
-//     parentCheck.appendChild(check);
-// }
