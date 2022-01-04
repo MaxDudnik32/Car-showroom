@@ -6,6 +6,7 @@ if(checkEntry() == true) {
 }
 showCar();
 checkStatus();
+checkOrder();
 
 // Form
 
