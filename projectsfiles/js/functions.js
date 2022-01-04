@@ -6,6 +6,18 @@ let activeCar;
 
 // Load
 
+const checkOrder = () => {
+    const checkOrder = JSON.parse(localStorage.getItem('users'));
+    const orderPers = JSON.parse(localStorage.getItem('loginpers'));
+    for(let i = 0; i < checkOrder.length; i++) {
+        if(checkOrder[i].name === orderPers.nameLog) {
+            if(checkOrder[i].order) {
+                console.log("Yeeeee!");
+            }
+        }
+    }
+}
+
 const checkLocal = () => {
     if(localStorage.getItem('users')) {
         return JSON.parse(localStorage.getItem('users'))
@@ -18,6 +30,10 @@ const checkLocal = () => {
 
 const checkEntry = () => {
     return JSON.parse(localStorage.getItem('loginpers')).entry;
+}
+
+const checkManager = () => {
+    return JSON.parse(localStorage.getItem('loginpers')).postlog;
 }
 
 const quit = () => {
@@ -108,7 +124,9 @@ const charCar = () => {
         showProductInfo(true);
         showProductsDetails(activeCar, 0);
         document.getElementById('selected-parents').innerHTML = "";
-        showUsersToSelect();
+        if(checkManager() === true) {
+            showUsersToSelect();
+        }
         document.getElementById('previous').classList.remove('hidden')
     })
     charCarWrap.appendChild(carInfoBtn);
@@ -135,7 +153,9 @@ const charCar = () => {
         showProductInfo(false);
         showProductsDetails(activeCar, 1);
         document.getElementById('selected-parents').innerHTML = "";
-        showUsersToSelect();
+        if(checkManager() === true) {
+            showUsersToSelect();
+        }
         document.getElementById('previous').classList.remove('hidden')
     })
     charMotorWrap.appendChild(motorInfoBtn);
@@ -149,12 +169,10 @@ const showProductInfo = (checkInfo) => {
     const productParent = document.getElementById('main-products');
     productParent.classList.add('main-products');
     productParent.innerHTML = "";
-    // id
 
     const imgParents = document.createElement('div');
     imgParents.setAttribute('id', 'car-elements');
     imgParents.classList.add('car-elements');
-    console.log(document.getElementById('car-elements'));
 
     const infoCar = document.getElementById('info-car');
 
@@ -182,46 +200,6 @@ const showProductInfo = (checkInfo) => {
     productParent.appendChild(checkParents);
 }
 
-// const showProducts = () => {
-//     const main = document.getElementById('main');
-
-//     const productParent = document.getElementById('main-products');
-//     productParent.classList.add('main-products');
-//     // id
-
-//     const imgParents = document.createElement('div');
-//     imgParents.setAttribute('id', 'car-elements');
-//     imgParents.classList.add('car-elements');
-
-//     const choseElement = document.createElement('img');
-//     choseElement.src = 'images/cars/' + (activeCar+1) + '.png';
-//     choseElement.addEventListener('click', function() {
-//         showProductsDetails(activeCar, 0);
-//         document.getElementById('selected-parents').innerHTML = "";
-//         showUsersToSelect();
-//     })
-
-//     const example = document.createElement('img');
-//     example.src = 'images/details1/1.png';
-//     example.addEventListener('click', function() {
-//         showProductsDetails(activeCar, 1);
-//         document.getElementById('selected-parents').innerHTML = "";
-//         showUsersToSelect();
-//     })
-
-//     const buyParent = document.createElement('div');
-//     buyParent.setAttribute('id', 'buy-parent');
-
-//     const checkParents = document.createElement('div');
-//     checkParents.setAttribute('id', 'selected-parents');
-
-//     productParent.appendChild(imgParents);
-//     imgParents.appendChild(choseElement);
-//     imgParents.appendChild(example);
-//     productParent.appendChild(buyParent);
-//     productParent.appendChild(checkParents);
-// }
-
 const showProductsDetails = (carIndex, elementToBuy) => {
     const product = cars[carIndex];
     const choseCarElement = product.details[elementToBuy];
@@ -242,35 +220,39 @@ const showProductsDetails = (carIndex, elementToBuy) => {
     amountElement.innerHTML = "The amount of this item is: " + choseCarElement.count + " items";
     wrapper.appendChild(amountElement);
 
-    const buyAmount = document.createElement('input');
-    buyAmount.setAttribute('type', 'text');
-    buyAmount.setAttribute('id', 'example');
-    wrapper.appendChild(buyAmount);
+    if(checkManager() === true) {
+        const buyAmount = document.createElement('input');
+        buyAmount.setAttribute('type', 'text');
+        buyAmount.setAttribute('id', 'example');
+        wrapper.appendChild(buyAmount);
+    }
 
-    const buyButton = document.createElement('input');
-    buyButton.setAttribute('type', 'button');
-    buyButton.setAttribute('value', 'Buy');
-    buyButton.setAttribute('id', 'buyButton');
-    buyButton.addEventListener('click', function() {
-        const radioBtn = document.querySelectorAll('[name*="radio"]');
-        let radioCheck = false;
-        let selectedPerson;
-        for(let i in radioBtn) {
-            if(radioBtn[i].checked) {
-                radioCheck = true;
-                selectedPerson = i;
-            }    
-        }
-        if(document.getElementById('example').value > choseCarElement.count) {
-            // alert('Congrat');
-            alert('You have choosen to much items');
-        } else if(radioCheck != true) {
-            alert('You need to choose user!');
-        } else {
-            showBuyInfo(product, choseCarElement, selectedPerson);
-        }
-    })
-    wrapper.appendChild(buyButton);
+    if(checkManager() === true) {
+        const buyButton = document.createElement('input');
+        buyButton.setAttribute('type', 'button');
+        buyButton.setAttribute('value', 'Buy');
+        buyButton.setAttribute('id', 'buyButton');
+        buyButton.addEventListener('click', function() {
+            const radioBtn = document.querySelectorAll('[name*="radio"]');
+            let radioCheck = false;
+            let selectedPerson;
+            for(let i in radioBtn) {
+                if(radioBtn[i].checked) {
+                    radioCheck = true;
+                    selectedPerson = i;
+                }    
+            }
+            if(document.getElementById('example').value > choseCarElement.count) {
+                // alert('Congrat');
+                alert('You have choosen to much items');
+            } else if(radioCheck != true) {
+                alert('You need to choose user!');
+            } else {
+                showBuyInfo(product, choseCarElement, selectedPerson);
+            }
+        })
+        wrapper.appendChild(buyButton);
+    }
 }
 
 const showUsersToSelect = () => {
@@ -291,6 +273,7 @@ const showUsersToSelect = () => {
     checkParentss.appendChild(sellUserInfo);
 
     for(let i=0; i<userData.length; i++){
+        if(JSON)
         const wrapper = document.createElement('div')
         wrapper.setAttribute('data-id', i)
         wrapper.classList.add('user')
@@ -342,7 +325,7 @@ const showBuyInfo = (product, choseCarElement, selectedPerson) => {
 }
 
 const saveOrder = (person, product, count) => {
-    let order = [product, count];
+    let order = [cars[activeCar].mark, product, count];
     let mainUsers = JSON.parse(localStorage.getItem('users'));
     let currentOrder = mainUsers[person].order;
     if(currentOrder === undefined) {
@@ -354,8 +337,8 @@ const saveOrder = (person, product, count) => {
     }
     localStorage.setItem('users', JSON.stringify(mainUsers));
     document.getElementById('show-buy-info').classList.add('hidden');
-    document.getElementById('buy-parent').classList.add('hidden');
-    document.getElementById('selected-parents').classList.add('hidden');
+    // document.getElementById('buy-parent').classList.add('hidden');
+    // document.getElementById('selected-parents').classList.add('hidden');
 }
 
 // Main page car
