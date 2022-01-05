@@ -39,64 +39,42 @@ const orderMessage = (order) => {
     }
     orderParent.appendChild(orderText);
 
-    console.log(order)
+    console.log(order);
 
-    // const orderCarWrap = document.createElement('div');
-    // orderCarWrap.classList.add('char-car-wrapper');
-    // orderParent.appendChild(orderCarWrap);
+    for(let i = 0; i < order.length; i++) {
+        const infoOrder = document.createElement('div');
+        infoOrder.innerHTML = 'The order is: ' + order[i][0] + ' car ' + order[i][1] + ' model ' + order[i][2] + ' count from ' + order[i][3];
+        orderParent.appendChild(infoOrder);
+    }
 
-    // const orderElement = document.createElement('img');
-    // orderElement.src = 'images/cars/' + 1 + '.png';
-    // orderElement.classList.add('charElements');
-    // orderCarWrap.appendChild(orderElement);
+    const acceptBtn = document.createElement('a');
+    acceptBtn.classList.add('get-info');
+    acceptBtn.innerHTML = 'Accept all';
+    acceptBtn.addEventListener('click', function() {
+        for(let i = 0; i < order.length; i++) {
+            completeOrder(order[i][0], order[i][1], order[i][2]);
+        }
+    })
+    orderParent.appendChild(acceptBtn);
+}
 
-    // const carInfoBtn = document.createElement('a');
-    // carInfoBtn.classList.add('get-info');
-    // carInfoBtn.innerHTML = 'Get more info';
-    // carInfoBtn.addEventListener('click', function() {
-    //     charParent.classList.add('hidden');
-    //     charParent.classList.remove('chose-car-flex');
-    //     document.getElementById('header').classList.remove('opacity');
-    //     document.getElementById('main').classList.remove('opacity');
-    //     hideElements();
-    //     showProductInfo(true);
-    //     showProductsDetails(1, 0);
-    //     document.getElementById('selected-parents').innerHTML = "";
-    //     if(checkManager() === true) {
-    //         showUsersToSelect();
-    //     }
-    //     document.getElementById('previous').classList.remove('hidden')
-    // })
-    // charCarWrap.appendChild(carInfoBtn);
+const completeOrder = (carName, detailName, countName) => {
+    if(JSON.parse(localStorage.getItem('products'))) {
 
-    // const charMotorWrap = document.createElement('div');
-    // charMotorWrap.classList.add('char-car-wrapper');
-    // charParent.appendChild(charMotorWrap);
-
-    // const motorElement = document.createElement('img');
-    // motorElement.src = 'images/details1/1.png';
-    // motorElement.classList.add('charElements');
-    // motorElement.classList.add('motor-detail');
-    // charMotorWrap.appendChild(motorElement);
-
-    // const motorInfoBtn = document.createElement('a');
-    // motorInfoBtn.classList.add('get-info');
-    // motorInfoBtn.innerHTML = 'Get more info';
-    // motorInfoBtn.addEventListener('click', function() {
-    //     charParent.classList.add('hidden');
-    //     charParent.classList.remove('chose-car-flex');
-    //     document.getElementById('header').classList.remove('opacity');
-    //     document.getElementById('main').classList.remove('opacity');
-    //     hideElements();
-    //     showProductInfo(false);
-    //     showProductsDetails(1, 1);
-    //     document.getElementById('selected-parents').innerHTML = "";
-    //     if(checkManager() === true) {
-    //         showUsersToSelect();
-    //     }
-    //     document.getElementById('previous').classList.remove('hidden')
-    // })
-    // charMotorWrap.appendChild(motorInfoBtn);
+    } else {
+        for(let i = 0; i < cars.length; i++) {
+            if(cars[i].mark === carName) {
+                console.log(cars[i].details.length)
+                let index = i;
+                for(let j = 0; j < cars[index].details.length; i++) {
+                    if(cars[index].details[j].name === detailName) {
+                        cars[index].details[j].count === (cars[index].details[j].count - countName);
+                        // console.log(cars[index].details[j].count);
+                    }
+                }
+            }
+        }
+    }
 }
 
 // Drop down
