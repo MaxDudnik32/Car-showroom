@@ -3,10 +3,10 @@ const userData = checkLocal();
 if(checkEntry() == true) {
     document.getElementById('mainMenu').classList.remove('hidden');
     document.getElementById('loginNav').classList.add('hidden');
+    checkOrder();
 }
 showCar();
 checkStatus();
-checkOrder();
 
 // Form
 
