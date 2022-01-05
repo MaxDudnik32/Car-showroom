@@ -12,7 +12,7 @@ const checkOrder = () => {
     for(let i = 0; i < checkOrder.length; i++) {
         if(checkOrder[i].name === orderPers.nameLog) {
             if(checkOrder[i].order) {
-                console.log("Yeeeee!");
+                orderMessage(checkOrder[i].order);
             }
         }
     }
@@ -26,10 +26,87 @@ const checkLocal = () => {
     }
 }
 
+const orderMessage = (order) => {
+    const orderParent = document.getElementById('chose-car');
+    orderParent.innerHTML = "";
+    orderParent.classList.remove('hidden');
+
+    const orderText = document.createElement('div');
+    if(order.length > 1) {
+        orderText.innerHTML = 'You achived ' + order.length + ' orders!';
+    } else {
+        orderText.innerHTML = 'You achived ' + order.length + ' order!';
+    }
+    orderParent.appendChild(orderText);
+
+    console.log(order)
+
+    // const orderCarWrap = document.createElement('div');
+    // orderCarWrap.classList.add('char-car-wrapper');
+    // orderParent.appendChild(orderCarWrap);
+
+    // const orderElement = document.createElement('img');
+    // orderElement.src = 'images/cars/' + 1 + '.png';
+    // orderElement.classList.add('charElements');
+    // orderCarWrap.appendChild(orderElement);
+
+    // const carInfoBtn = document.createElement('a');
+    // carInfoBtn.classList.add('get-info');
+    // carInfoBtn.innerHTML = 'Get more info';
+    // carInfoBtn.addEventListener('click', function() {
+    //     charParent.classList.add('hidden');
+    //     charParent.classList.remove('chose-car-flex');
+    //     document.getElementById('header').classList.remove('opacity');
+    //     document.getElementById('main').classList.remove('opacity');
+    //     hideElements();
+    //     showProductInfo(true);
+    //     showProductsDetails(1, 0);
+    //     document.getElementById('selected-parents').innerHTML = "";
+    //     if(checkManager() === true) {
+    //         showUsersToSelect();
+    //     }
+    //     document.getElementById('previous').classList.remove('hidden')
+    // })
+    // charCarWrap.appendChild(carInfoBtn);
+
+    // const charMotorWrap = document.createElement('div');
+    // charMotorWrap.classList.add('char-car-wrapper');
+    // charParent.appendChild(charMotorWrap);
+
+    // const motorElement = document.createElement('img');
+    // motorElement.src = 'images/details1/1.png';
+    // motorElement.classList.add('charElements');
+    // motorElement.classList.add('motor-detail');
+    // charMotorWrap.appendChild(motorElement);
+
+    // const motorInfoBtn = document.createElement('a');
+    // motorInfoBtn.classList.add('get-info');
+    // motorInfoBtn.innerHTML = 'Get more info';
+    // motorInfoBtn.addEventListener('click', function() {
+    //     charParent.classList.add('hidden');
+    //     charParent.classList.remove('chose-car-flex');
+    //     document.getElementById('header').classList.remove('opacity');
+    //     document.getElementById('main').classList.remove('opacity');
+    //     hideElements();
+    //     showProductInfo(false);
+    //     showProductsDetails(1, 1);
+    //     document.getElementById('selected-parents').innerHTML = "";
+    //     if(checkManager() === true) {
+    //         showUsersToSelect();
+    //     }
+    //     document.getElementById('previous').classList.remove('hidden')
+    // })
+    // charMotorWrap.appendChild(motorInfoBtn);
+}
+
 // Drop down
 
 const checkEntry = () => {
-    return JSON.parse(localStorage.getItem('loginpers')).entry;
+    if(JSON.parse(localStorage.getItem('loginpers'))) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 const checkManager = () => {
@@ -64,7 +141,10 @@ const changePost = () => {
 
 const checkStatus = () => {
     let change = document.getElementById('changePost');
-    let post = JSON.parse(localStorage.getItem('loginpers')).postlog;
+    let post;
+    if(JSON.parse(localStorage.getItem('loginpers'))) {
+        post = JSON.parse(localStorage.getItem('loginpers')).postlog;
+    }
     if(post == false) {
         change.innerHTML = 'Be user';
     } else {
@@ -273,25 +353,26 @@ const showUsersToSelect = () => {
     checkParentss.appendChild(sellUserInfo);
 
     for(let i=0; i<userData.length; i++){
-        if(JSON)
-        const wrapper = document.createElement('div')
-        wrapper.setAttribute('data-id', i)
-        wrapper.classList.add('user')
+        if(JSON.parse(localStorage.getItem('users'))[i].name !== JSON.parse(localStorage.getItem('loginpers')).nameLog) {
+            const wrapper = document.createElement('div')
+            wrapper.setAttribute('data-id', i)
+            wrapper.classList.add('user')
 
-        let personName = document.createElement('div')
-        personName.innerHTML = `${userData[i].name}`
+            let personName = document.createElement('div')
+            personName.innerHTML = `${userData[i].name}`
 
-        let checkparent = document.createElement('div');
-        checkparent.setAttribute('data-btn', i);
-        wrapper.appendChild(checkparent);
+            let checkparent = document.createElement('div');
+            checkparent.setAttribute('data-btn', i);
+            wrapper.appendChild(checkparent);
 
-        checkParentss.appendChild(wrapper);
-        wrapper.appendChild(personName);
+            checkParentss.appendChild(wrapper);
+            wrapper.appendChild(personName);
 
-        const check = document.createElement('input');
-        check.setAttribute('type', 'radio');
-        check.setAttribute('name', 'radio');
-        checkparent.appendChild(check);
+            const check = document.createElement('input');
+            check.setAttribute('type', 'radio');
+            check.setAttribute('name', 'radio');
+            checkparent.appendChild(check);
+        }
     }
 }
 
@@ -325,15 +406,16 @@ const showBuyInfo = (product, choseCarElement, selectedPerson) => {
 }
 
 const saveOrder = (person, product, count) => {
-    let order = [cars[activeCar].mark, product, count];
+    let orderedPerson = JSON.parse(localStorage.getItem('loginpers')).nameLog; 
+    let order = [cars[activeCar].mark, product, count, orderedPerson];
     let mainUsers = JSON.parse(localStorage.getItem('users'));
     let currentOrder = mainUsers[person].order;
     if(currentOrder === undefined) {
         mainUsers[person].order = [order];
-        alert("You have selled " + product + " to " + mainUsers[person].name);
+        alert("You have ordered " + product + " from " + mainUsers[person].name);
     } else {
         currentOrder.push(order);
-        alert("You have selled " + product + " to " + mainUsers[person].name);
+        alert("You have ordered " + product + " from " + mainUsers[person].name);
     }
     localStorage.setItem('users', JSON.stringify(mainUsers));
     document.getElementById('show-buy-info').classList.add('hidden');
@@ -549,7 +631,13 @@ const savePerson = (user, checkCrud) => {
     } else {
         userData.push(user);
         localStorage.setItem('users', JSON.stringify(userData));
-        // localStorage.setItem('login', JSON.stringify(true));
+        const userSignUp = {
+            nameLog: userData[userData.length-1].name,
+            passwordLog: userData[userData.length-1].password,
+            postlog: true,
+            entry: true,
+        }
+        localStorage.setItem('loginpers', JSON.stringify(userSignUp));
         if(checkCrud) {
             while(myNode.firstChild) {
                 myNode.removeChild(myNode.firstChild);
@@ -574,10 +662,8 @@ const checkLogin = () => {
 
     for(let i = 0; i < usersInfo.length; i++) {
         if((usersInfo[i].name === userDatLog.nameLog) && (usersInfo[i].password === userDatLog.passwordLog)) {
-            // userDatLog.postlog = usersInfo[i].post;
             showSignIn();
-            localStorage.setItem('loginpers', JSON.stringify(userDatLog))
-            // localStorage.setItem('login', JSON.stringify(true));
+            localStorage.setItem('loginpers', JSON.stringify(userDatLog));
             document.getElementById('welcome').innerHTML = 'Welcome, ' + userDatLog.nameLog;
             check = true;
         }
