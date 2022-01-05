@@ -11,8 +11,9 @@ const checkOrder = () => {
     const orderPers = JSON.parse(localStorage.getItem('loginpers'));
     for(let i = 0; i < checkOrder.length; i++) {
         if(checkOrder[i].name === orderPers.nameLog) {
-            if(checkOrder[i].order) {
-                orderMessage(checkOrder[i].order);
+            console.log(checkOrder[i].order[0][4])
+            if(checkOrder[i].order[0][4] === false) {
+                orderMessage(checkOrder[i].order, i);
             }
         }
     }
@@ -26,7 +27,7 @@ const checkLocal = () => {
     }
 }
 
-const orderMessage = (order) => {
+const orderMessage = (order, checkOrder) => {
     const orderParent = document.getElementById('chose-car');
     orderParent.innerHTML = "";
     orderParent.classList.remove('hidden');
@@ -39,8 +40,6 @@ const orderMessage = (order) => {
     }
     orderParent.appendChild(orderText);
 
-    console.log(order);
-
     for(let i = 0; i < order.length; i++) {
         const infoOrder = document.createElement('div');
         infoOrder.innerHTML = 'The order is: ' + order[i][0] + ' car ' + order[i][1] + ' model ' + order[i][2] + ' count from ' + order[i][3];
@@ -51,25 +50,48 @@ const orderMessage = (order) => {
     acceptBtn.classList.add('get-info');
     acceptBtn.innerHTML = 'Accept all';
     acceptBtn.addEventListener('click', function() {
+        orderParent.classList.add('hidden');
         for(let i = 0; i < order.length; i++) {
-            completeOrder(order[i][0], order[i][1], order[i][2]);
+            completeOrder(order[i][0], order[i][1], order[i][2], checkOrder);
         }
     })
     orderParent.appendChild(acceptBtn);
 }
 
-const completeOrder = (carName, detailName, countName) => {
+const completeOrder = (carName, detailName, countName, orderedPerson) => {
+    const checkOrder = JSON.parse(localStorage.getItem('users'));
+    checkOrder[orderedPerson].order[0][4] = true;
+    for(let i = 0; i < checkOrder.length; i++) {
+        if(checkOrder[i].name === checkOrder[orderedPerson].order[0][3]) {
+            console.log(checkOrder[orderedPerson].order[0][3]);
+            checkOrder[i].bought = [checkOrder[orderedPerson].order[0][0], 
+                checkOrder[orderedPerson].order[0][1],
+                checkOrder[orderedPerson].order[0][2],
+                checkOrder[orderedPerson].name];
+        }
+    }
+    localStorage.setItem('users', JSON.stringify(checkOrder));
     if(JSON.parse(localStorage.getItem('products'))) {
-
+        let carOrder = JSON.parse(localStorage.getItem('products'));
+        for(let i = 0; i < carOrder.length; i++) {
+            if(carOrder[i].mark === carName) {
+                let index = i;
+                for(let j = 0; j < carOrder[index].details.length; j++) {
+                    if(carOrder[index].details[j].name === detailName) {
+                        carOrder[0].details[0].count = carOrder[0].details[0].count - countName; 
+                        localStorage.setItem('products', JSON.stringify(carOrder));
+                    }
+                }
+            }
+        }
     } else {
         for(let i = 0; i < cars.length; i++) {
             if(cars[i].mark === carName) {
-                console.log(cars[i].details.length)
                 let index = i;
-                for(let j = 0; j < cars[index].details.length; i++) {
+                for(let j = 0; j < cars[index].details.length; j++) {
                     if(cars[index].details[j].name === detailName) {
-                        cars[index].details[j].count === (cars[index].details[j].count - countName);
-                        // console.log(cars[index].details[j].count);
+                        cars[0].details[0].count = cars[0].details[0].count - countName; 
+                        localStorage.setItem('products', JSON.stringify(cars));
                     }
                 }
             }
@@ -385,7 +407,7 @@ const showBuyInfo = (product, choseCarElement, selectedPerson) => {
 
 const saveOrder = (person, product, count) => {
     let orderedPerson = JSON.parse(localStorage.getItem('loginpers')).nameLog; 
-    let order = [cars[activeCar].mark, product, count, orderedPerson];
+    let order = [cars[activeCar].mark, product, count, orderedPerson, false];
     let mainUsers = JSON.parse(localStorage.getItem('users'));
     let currentOrder = mainUsers[person].order;
     if(currentOrder === undefined) {
@@ -678,10 +700,10 @@ function showUsers() {
         parentCrud.appendChild(wrapper);
         wrapper.appendChild(personName);
 
-        let personImg = document.createElement('img');
-        personImg.classList.add('image');
-        personImg.src='images/unknown.jpg';
-        wrapper.appendChild(personImg);
+        // let personImg = document.createElement('img');
+        // personImg.classList.add('image');
+        // personImg.src='images/unknown.jpg';
+        // wrapper.appendChild(personImg);
         if(!JSON.parse(localStorage.getItem('loginpers')).postlog) {
             showBtn(wrapper, i, parentCrud);
         }        
