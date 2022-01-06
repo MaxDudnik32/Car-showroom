@@ -697,16 +697,16 @@ a.btn-goback:hover {
 
 .crud {
     display: flex;
+    flex-direction: column;
 }
 
 .user {
     display: flex;
 }
 
-.button {
+/* .button {
     display: flex;
-    flex-direction: column;
-}
+} */
 
 .editform {
     font-size: 22px;
@@ -822,4 +822,54 @@ a.btn-goback:hover {
 .motor-detail {
     max-width: 17%;
     margin-left: 25px;
+}
+
+/* table */
+
+table {
+    color: white;
+	width: 100%;
+	border: 0;
+}
+td {
+    border-top: 1px solid gray;
+	/* border: 5px solid #F1F1F1; */
+	text-align: center;
+	text-transform: uppercase;
+	padding: 10px;
+	font-size: 14px;
+	font-family: Courier New;
+}
+
+/* .main-td {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}  */
+
+/* CRUD btn */
+
+#view-btn {
+    background: gray;
+    /* background-color: blue; */
+    border-radius: 18%;
+}
+
+#remove-btn {
+    background: gray;
+    /* background-color: red; */
+    border-radius: 18%;
+}
+
+#edit-btn {
+    background: gray;
+    /* background-color: orange; */
+    border-radius: 18%;
+    margin: 0px 10px;
+}
+
+/* View */
+
+.close {
+    font-size: 28px;
+    padding: 15px 25px;
 }
