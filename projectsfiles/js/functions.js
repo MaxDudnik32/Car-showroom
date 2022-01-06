@@ -11,9 +11,10 @@ const checkOrder = () => {
     const orderPers = JSON.parse(localStorage.getItem('loginpers'));
     for(let i = 0; i < checkOrder.length; i++) {
         if(checkOrder[i].name === orderPers.nameLog) {
-            console.log(checkOrder[i].order[0][4])
-            if(checkOrder[i].order[0][4] === false) {
-                orderMessage(checkOrder[i].order, i);
+            if(checkOrder[i].order) {
+                if(checkOrder[i].order[0][4] === false) {
+                    orderMessage(checkOrder[i].order, i);
+                }
             }
         }
     }
@@ -63,11 +64,15 @@ const completeOrder = (carName, detailName, countName, orderedPerson) => {
     checkOrder[orderedPerson].order[0][4] = true;
     for(let i = 0; i < checkOrder.length; i++) {
         if(checkOrder[i].name === checkOrder[orderedPerson].order[0][3]) {
-            console.log(checkOrder[orderedPerson].order[0][3]);
-            checkOrder[i].bought = [checkOrder[orderedPerson].order[0][0], 
-                checkOrder[orderedPerson].order[0][1],
-                checkOrder[orderedPerson].order[0][2],
-                checkOrder[orderedPerson].name];
+            let boughtArr = [checkOrder[orderedPerson].order[0][0], 
+            checkOrder[orderedPerson].order[0][1],
+            checkOrder[orderedPerson].order[0][2],
+            checkOrder[orderedPerson].name];
+            if(checkOrder[i].bought) {
+                checkOrder[i].bought.push(boughtArr);
+            } else {
+                checkOrder[i].bought = [boughtArr];
+            }
         }
     }
     localStorage.setItem('users', JSON.stringify(checkOrder));
@@ -677,83 +682,148 @@ const checkLogin = () => {
 
 function showUsers() {
     let parentCrud = document.getElementById('crud');
+    parentCrud.innerHTML = `
+    <table id="crud-table">
+        <tr>
+            <td class="main-td">ID</td>
+            <td class="main-td">NAME</td>
+            <td class="main-td" id="email-table">EMAIL</td>
+            <td class="main-td" id="action-table">ACTION</td>
+         </tr>
+    </table>
+    `;
 
-    if(parentCrud === null){
-        parentCrud = document.createElement('div')
-        parentCrud.setAttribute('id', 'crud') 
-        // document.querySelector('body').appendChild(parentCrud)
-        document.getElementById('main').appendChild(parentCrud);
-    }
+    // if(parentCrud === null){
+    //     parentCrud = document.createElement('div')
+    //     parentCrud.setAttribute('id', 'crud') 
+    //     // document.querySelector('body').appendChild(parentCrud)
+    //     document.getElementById('main').appendChild(parentCrud);
+    // }
 
     for(let i=0; i<userData.length; i++){
-        const wrapper = document.createElement('div')
-        wrapper.setAttribute('data-id', i)
-        wrapper.classList.add('user')
+        // const wrapper = document.createElement('div')
+        // wrapper.setAttribute('data-id', i)
+        // wrapper.classList.add('user')
 
-        let personName = document.createElement('div')
-        personName.innerHTML = `${userData[i].name}`
+        const crudTable = document.getElementById('crud-table');
 
-        let checkparent = document.createElement('div');
-        checkparent.setAttribute('data-btn', i);
-        wrapper.appendChild(checkparent);
+        const crudTrPerson = document.createElement('tr');
+        crudTrPerson.setAttribute('data-id', i);
+        crudTable.appendChild(crudTrPerson);
 
-        parentCrud.appendChild(wrapper);
-        wrapper.appendChild(personName);
+        let idPerson = document.createElement('div');
+        idPerson.innerHTML = (i + 1);
 
-        // let personImg = document.createElement('img');
-        // personImg.classList.add('image');
-        // personImg.src='images/unknown.jpg';
-        // wrapper.appendChild(personImg);
+        const crudTd1 = document.createElement('td');
+        crudTd1.appendChild(idPerson);
+        crudTrPerson.appendChild(crudTd1);
+
+        let personName = document.createElement('div');
+        personName.innerHTML = `${userData[i].name}`;
+
+        const crudTd2 = document.createElement('td');
+        crudTd2.appendChild(personName);
+        crudTrPerson.appendChild(crudTd2);
+
         if(!JSON.parse(localStorage.getItem('loginpers')).postlog) {
-            showBtn(wrapper, i, parentCrud);
-        }        
+            let personEmail = document.createElement('div');
+            personEmail.innerHTML = `${userData[i].email}`;
+
+            const crudTd3 = document.createElement('td');
+            crudTd3.appendChild(personEmail);
+            crudTrPerson.appendChild(crudTd3);
+
+            const crudTd4 = document.createElement('td');
+            showBtn(i, parentCrud, crudTrPerson, crudTd4);
+        } else {
+            document.getElementById('email-table').classList.add('hidden');
+            document.getElementById('action-table').classList.add('hidden');
+        }
+
+        // parentCrud.appendChild(wrapper);
+        // wrapper.appendChild(personName);
+
+        // if(!JSON.parse(localStorage.getItem('loginpers')).postlog) {
+        //     showBtn(wrapper, i, parentCrud);
+        // }     
     }
 }
 
-function showBtn(wrapper, i, parentCrud){
+function showBtn(i, parentCrud, crudTrPerson, crudTd4){
         let btnparent = document.createElement('div');
         btnparent.setAttribute('data-btn', i);
         btnparent.classList.add('button')
 
-        let view = document.createElement('input')
-        view.setAttribute('type', 'button')
-        view.setAttribute('value', 'view')
+        let view = document.createElement('a');
+        view.setAttribute('id', 'view-btn')
+        view.innerHTML = 'View';
         view.addEventListener('click', function(){
-            let info = document.createElement('div')
-            info.innerHTML = `${userData[i].name} ${userData[i].age} years old`
-            parentCrud.appendChild(info)
+            if(userData[i].bought) {
+                showBought(userData[i].bought, userData[i].name);
+            } else {
+                alert('No info about this perosn!')
+            }
+
+            // let info = document.createElement('div')
+            // info.innerHTML = `${userData[i].name} ${userData[i].age} years old`
+            // parentCrud.appendChild(info)
         })
 
-        let remove = document.createElement('input')
-        remove.setAttribute('type', 'button')
-        remove.setAttribute('value', 'remove')
+        let remove = document.createElement('a');
+        remove.setAttribute('id', 'remove-btn');
+        remove.innerHTML = 'Del';
         remove.addEventListener('click', function(){
             if(confirm('Do you want delete this person?')){
-                const id = wrapper.getAttribute('data-id')
-                parentCrud.remove(wrapper)
-                userData.splice(id, 1)
+                const id = crudTrPerson.getAttribute('data-id')
+                parentCrud.innerHTML = "";
+                userData.splice(id, 1);
                 localStorage.setItem('users',JSON.stringify(userData))
-                showUsers(true);
+                showUsers();
             }
         })
 
-        let edit = document.createElement('input');
-        edit.setAttribute('type', 'button');
-        edit.setAttribute('value', 'edit');
+        let edit = document.createElement('a');
+        edit.setAttribute('id', 'edit-btn')
+        edit.innerHTML = 'Edit';
         edit.addEventListener('click', function(){
             let form = document.getElementById('form-crud');
             document.getElementById('crudframe').classList.add('framecrud');
             document.getElementById('crudframe').classList.remove('hidden');
             form.classList.remove('hidden');
-            mainId = wrapper.getAttribute('data-id');
+            mainId = crudTrPerson.getAttribute('data-id');
             document.getElementById('editform').innerHTML = `Edit form of ${userData[i].name}`;
             form.elements.username.value = userData[i].name;
             form.elements.email.value = userData[i].email;
             form.elements.password.value = userData[i].password;
         })
 
-        wrapper.appendChild(btnparent);
+        crudTrPerson.appendChild(crudTd4);
+        crudTd4.appendChild(btnparent);
         btnparent.appendChild(view);
-        btnparent.appendChild(remove);
         btnparent.appendChild(edit);
+        btnparent.appendChild(remove);
+}
+
+const showBought = (order, namePers) => {
+    const boughtParent = document.getElementById('chose-car');
+    boughtParent.innerHTML = `
+    <div id="close-btn" class="close">
+        <i class="fas fa-times"></i>
+    </div>
+    `;
+    boughtParent.classList.remove('hidden');
+
+    document.getElementById('close-btn').addEventListener('click', function() {
+        boughtParent.classList.add('hidden');
+    })
+
+    console.log(order[0])
+    const boughtOrder = JSON.parse(localStorage.getItem('users'))
+
+    
+    for(let i = 0; i < order.length; i++) {
+        const boughtText = document.createElement('div');
+        boughtText.innerHTML = namePers + ' have bought ' + order[i][0] + ' car!';
+        boughtParent.appendChild(boughtText);
+    }
 }
