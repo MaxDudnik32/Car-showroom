@@ -53,20 +53,20 @@ const orderMessage = (order, checkOrder) => {
     acceptBtn.addEventListener('click', function() {
         orderParent.classList.add('hidden');
         for(let i = 0; i < order.length; i++) {
-            completeOrder(order[i][0], order[i][1], order[i][2], checkOrder);
+            completeOrder(order[i][0], order[i][1], order[i][2], checkOrder, i);
         }
     })
     orderParent.appendChild(acceptBtn);
 }
 
-const completeOrder = (carName, detailName, countName, orderedPerson) => {
+const completeOrder = (carName, detailName, countName, orderedPerson, i) => {
     const checkOrder = JSON.parse(localStorage.getItem('users'));
-    checkOrder[orderedPerson].order[0][4] = true;
+    checkOrder[orderedPerson].order[i][4] = true;
     for(let i = 0; i < checkOrder.length; i++) {
-        if(checkOrder[i].name === checkOrder[orderedPerson].order[0][3]) {
-            let boughtArr = [checkOrder[orderedPerson].order[0][0], 
-            checkOrder[orderedPerson].order[0][1],
-            checkOrder[orderedPerson].order[0][2],
+        if(checkOrder[i].name === checkOrder[orderedPerson].order[i][3]) {
+            let boughtArr = [checkOrder[orderedPerson].order[i][0], 
+            checkOrder[orderedPerson].order[i][1],
+            checkOrder[orderedPerson].order[i][2],
             checkOrder[orderedPerson].name];
             if(checkOrder[i].bought) {
                 checkOrder[i].bought.push(boughtArr);
@@ -107,7 +107,7 @@ const completeOrder = (carName, detailName, countName, orderedPerson) => {
 // Drop down
 
 const checkEntry = () => {
-    if(JSON.parse(localStorage.getItem('loginpers'))) {
+    if(localStorage.getItem('loginpers').length > 3) {
         return true;
     } else {
         return false;
@@ -120,9 +120,7 @@ const checkManager = () => {
 
 const quit = () => {
     if(confirm("Are you sure to quit form account?")) {
-        let quit = [];
-        // localStorage.setItem('login', JSON.stringify(false));
-        localStorage.setItem('loginpers', JSON.stringify(quit));
+        localStorage.setItem('loginpers', JSON.stringify([]));
         document.getElementById('mainMenu').classList.add('hidden');
         document.getElementById('loginNav').classList.remove('hidden');
     }
@@ -178,6 +176,7 @@ const unhideElements = () => {
 }
 
 const showCRUD = () => {
+    document.getElementById('previous').classList.remove('hidden');
     hideElements();
     showUsers();
 }
@@ -186,7 +185,18 @@ const showCRUD = () => {
 
 const charCar = () => {
     const charParent = document.getElementById('chose-car');
-    charParent.innerHTML = "";
+    charParent.innerHTML = `
+    <div id="close-btn" class="close">
+        <i class="fas fa-times"></i>
+    </div>
+    `;
+
+    document.getElementById('close-btn').addEventListener('click', function() {
+        charParent.classList.add('hidden');
+        charParent.classList.remove('chose-car-flex');
+        document.getElementById('header').classList.remove('opacity');
+        document.getElementById('main').classList.remove('opacity');
+    })
 
     const charCarWrap = document.createElement('div');
     charCarWrap.classList.add('char-car-wrapper');
@@ -779,6 +789,12 @@ function showBtn(i, parentCrud, crudTrPerson, crudTd4){
                 userData.splice(id, 1);
                 localStorage.setItem('users',JSON.stringify(userData))
                 showUsers();
+                localStorage.setItem('loginpers', JSON.stringify([]));
+                document.getElementById('mainMenu').classList.add('hidden');
+                document.getElementById('loginNav').classList.remove('hidden');
+                unhideElements();
+                document.getElementById('crud').innerHTML = '';
+                document.getElementById('previous').classList.add('hidden');
             }
         })
 
@@ -820,10 +836,15 @@ const showBought = (order, namePers) => {
     console.log(order[0])
     const boughtOrder = JSON.parse(localStorage.getItem('users'))
 
+    const infoBuyWrapper = document.createElement('div');
+    infoBuyWrapper.classList.add('info-buy-wrapper');
+    boughtParent.appendChild(infoBuyWrapper);
     
     for(let i = 0; i < order.length; i++) {
+        console.log(order[i]);
         const boughtText = document.createElement('div');
-        boughtText.innerHTML = namePers + ' have bought ' + order[i][0] + ' car!';
-        boughtParent.appendChild(boughtText);
+        boughtText.classList.add('bought-text');
+        boughtText.innerHTML = namePers + ' have bought ' + order[i][2] + ' ' + order[i][0] + ' ' + order[i][1] + ' from ' + order[i][3];
+        infoBuyWrapper.appendChild(boughtText);
     }
 }
