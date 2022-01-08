@@ -793,7 +793,7 @@ a.btn-goback:hover {
 .chose-car-flex {
     display: flex;
     flex-direction: column;
-    padding: 50px;
+    padding: 10px 30px;
 }
 
 .opacity {
@@ -872,4 +872,14 @@ td {
 .close {
     font-size: 28px;
     padding: 15px 25px;
+}
+
+/* Show buy info */
+
+.info-buy-wrapper {
+    padding: 0 20px;
+}
+
+.bought-text {
+    padding: 7px 0;
 }
