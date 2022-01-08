@@ -46,9 +46,14 @@ document.getElementById('btn-save').addEventListener('click', function() {
 
 document.getElementById('previous').addEventListener('click', function() {
     unhideElements();
+    // Previous Btn
     document.getElementById('previous').classList.add('hidden');
+    // Main-product
     document.getElementById('main-products').classList.remove('main-products');
     document.getElementById('main-products').classList.add('hidden');
+    document.getElementById('info-car').classList.add('hidden');
+    //Crud
+    document.getElementById('crud').innerHTML = '';
 })
 
 // Car page
