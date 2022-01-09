@@ -117,7 +117,7 @@ const completeOrder = (carName, detailName, countName, orderedPersonName, ordere
 // Drop down
 
 const checkEntry = () => {
-    if(localStorage.getItem('loginpers').length > 3) {
+    if(localStorage.getItem('loginpers')) {
         return true;
     } else {
         return false;
