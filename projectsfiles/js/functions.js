@@ -337,9 +337,10 @@ const showProductsDetails = (carIndex, elementToBuy) => {
             for(let i in radioBtn) {
                 if(radioBtn[i].checked) {
                     radioCheck = true;
-                    selectedPerson = i;
+                    selectedPerson = document.querySelectorAll('*[data-id]');
                 }    
             }
+            console.log(selectedPerson);
             if(document.getElementById('example').value > choseCarElement.count) {
                 // alert('Congrat');
                 alert('You have choosen to much items');
@@ -396,6 +397,7 @@ const showUsersToSelect = () => {
 
 const showBuyInfo = (product, choseCarElement, selectedPerson) => {
     const buyInfo = document.getElementById('show-buy-info');
+    buyInfo.innerHTML = '';
     buyInfo.classList.remove('hidden');
 
     const elementInfo = document.createElement('div');
@@ -407,7 +409,7 @@ const showBuyInfo = (product, choseCarElement, selectedPerson) => {
     buyInfo.appendChild(costElement);
 
     const choosePerson = document.createElement('div');
-    choosePerson.innerHTML = "You want to sell it to " + userData[selectedPerson].name;
+    choosePerson.innerHTML = "You want to buy it from " + userData[selectedPerson].name;
     buyInfo.appendChild(choosePerson);
 
     const buyBtnWrapper = document.createElement('div');
