@@ -9,11 +9,13 @@ let activeCar;
 const checkOrder = () => {
     const checkOrder = JSON.parse(localStorage.getItem('users'));
     const orderPers = JSON.parse(localStorage.getItem('loginpers'));
-    for(let i = 0; i < checkOrder.length; i++) {
-        if(checkOrder[i].name === orderPers.nameLog) {
-            if(checkOrder[i].order) {
-                if(checkOrder[i].order[0][4] === false) {
-                    orderMessage(checkOrder[i].order, i);
+    if(checkOrder) {
+        for(let i = 0; i < checkOrder.length; i++) {
+            if(checkOrder[i].name === orderPers.nameLog) {
+                if(checkOrder[i].order) {
+                    if(checkOrder[i].order[0][4] === false) {
+                        orderMessage(checkOrder[i].order, i);
+                    }
                 }
             }
         }
@@ -53,21 +55,29 @@ const orderMessage = (order, checkOrder) => {
     acceptBtn.addEventListener('click', function() {
         orderParent.classList.add('hidden');
         for(let i = 0; i < order.length; i++) {
-            completeOrder(order[i][0], order[i][1], order[i][2], checkOrder, i);
+            console.log(order[i][4]);
+            order[i][4] = true;
+            completeOrder(order[i][0], order[i][1], order[i][2], order[i][3], order[i][4], checkOrder);
         }
     })
     orderParent.appendChild(acceptBtn);
 }
 
-const completeOrder = (carName, detailName, countName, orderedPerson, i) => {
+const completeOrder = (carName, detailName, countName, orderedPersonName, orderedStatus, orderedPerson) => {
     const checkOrder = JSON.parse(localStorage.getItem('users'));
-    checkOrder[orderedPerson].order[i][4] = true;
+    orderedStatus = true;
     for(let i = 0; i < checkOrder.length; i++) {
-        if(checkOrder[i].name === checkOrder[orderedPerson].order[i][3]) {
-            let boughtArr = [checkOrder[orderedPerson].order[i][0], 
-            checkOrder[orderedPerson].order[i][1],
-            checkOrder[orderedPerson].order[i][2],
+        if(checkOrder[i].name === orderedPersonName) {
+            console.log(orderedStatus);
+            let boughtArr = [carName, 
+                detailName,
+                countName,
             checkOrder[orderedPerson].name];
+            // let boughtArr = [checkOrder[orderedPerson].order[j][0], 
+            // checkOrder[orderedPerson].order[j][1],
+            // checkOrder[orderedPerson].order[j][2],
+            // checkOrder[orderedPerson].name];
+            // console.log(checkOrder[i].bought);
             if(checkOrder[i].bought) {
                 checkOrder[i].bought.push(boughtArr);
             } else {
@@ -637,7 +647,9 @@ function isValidEmail(email) {
 const savePerson = (user, checkCrud) => {
     let myNode = document.getElementById('crud');
     if(mainId <= userData.length) {
-        userData[mainId] = user;
+        userData[mainId].name = user.name;
+        userData[mainId].password = user.password;
+        userData[mainId].email = user.email;
         localStorage.setItem('users', JSON.stringify(userData));
         while(myNode.firstChild) {
             myNode.removeChild(myNode.firstChild);
@@ -833,7 +845,6 @@ const showBought = (order, namePers) => {
         boughtParent.classList.add('hidden');
     })
 
-    console.log(order[0])
     const boughtOrder = JSON.parse(localStorage.getItem('users'))
 
     const infoBuyWrapper = document.createElement('div');
@@ -841,7 +852,6 @@ const showBought = (order, namePers) => {
     boughtParent.appendChild(infoBuyWrapper);
     
     for(let i = 0; i < order.length; i++) {
-        console.log(order[i]);
         const boughtText = document.createElement('div');
         boughtText.classList.add('bought-text');
         boughtText.innerHTML = namePers + ' have bought ' + order[i][2] + ' ' + order[i][0] + ' ' + order[i][1] + ' from ' + order[i][3];
