@@ -14,7 +14,7 @@ const checkOrder = () => {
             if(checkOrder[i].name === orderPers.nameLog) {
                 if(checkOrder[i].order) {
                     if(checkOrder[i].order[0][4] === false) {
-                        orderMessage(checkOrder[i].order, i);
+                        orderMessage(checkOrder[i].order, i, checkOrder[i]);
                     }
                 }
             }
@@ -30,7 +30,7 @@ const checkLocal = () => {
     }
 }
 
-const orderMessage = (order, checkOrder) => {
+const orderMessage = (order, checkOrder, sellPers) => {
     const orderParent = document.getElementById('chose-car');
     orderParent.innerHTML = "";
     orderParent.classList.remove('hidden');
@@ -55,29 +55,22 @@ const orderMessage = (order, checkOrder) => {
     acceptBtn.addEventListener('click', function() {
         orderParent.classList.add('hidden');
         for(let i = 0; i < order.length; i++) {
-            console.log(order[i][4]);
-            order[i][4] = true;
-            completeOrder(order[i][0], order[i][1], order[i][2], order[i][3], order[i][4], checkOrder);
+            completeOrder(order[i][0], order[i][1], order[i][2], order[i][3], checkOrder, i);
         }
     })
     orderParent.appendChild(acceptBtn);
 }
 
-const completeOrder = (carName, detailName, countName, orderedPersonName, orderedStatus, orderedPerson) => {
+const completeOrder = (carName, detailName, countName, orderedPersonName, orderedPerson, currentOrder) => {
     const checkOrder = JSON.parse(localStorage.getItem('users'));
-    orderedStatus = true;
+    checkOrder[orderedPerson].order[currentOrder][4] = true;
+    console.log(checkOrder[orderedPerson].order[currentOrder][4]);
     for(let i = 0; i < checkOrder.length; i++) {
         if(checkOrder[i].name === orderedPersonName) {
-            console.log(orderedStatus);
             let boughtArr = [carName, 
                 detailName,
                 countName,
-            checkOrder[orderedPerson].name];
-            // let boughtArr = [checkOrder[orderedPerson].order[j][0], 
-            // checkOrder[orderedPerson].order[j][1],
-            // checkOrder[orderedPerson].order[j][2],
-            // checkOrder[orderedPerson].name];
-            // console.log(checkOrder[i].bought);
+                orderedPersonName];
             if(checkOrder[i].bought) {
                 checkOrder[i].bought.push(boughtArr);
             } else {
