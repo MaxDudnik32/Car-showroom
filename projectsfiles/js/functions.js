@@ -70,7 +70,7 @@ const completeOrder = (carName, detailName, countName, orderedPersonName, ordere
             let boughtArr = [carName, 
                 detailName,
                 countName,
-                orderedPersonName];
+                checkOrder[orderedPerson].name];
             if(checkOrder[i].bought) {
                 checkOrder[i].bought.push(boughtArr);
             } else {
@@ -332,15 +332,20 @@ const showProductsDetails = (carIndex, elementToBuy) => {
         buyButton.setAttribute('id', 'buyButton');
         buyButton.addEventListener('click', function() {
             const radioBtn = document.querySelectorAll('[name*="radio"]');
+            const nameBtn = document.querySelectorAll('[data-name*="name"]');
             let radioCheck = false;
             let selectedPerson;
             for(let i in radioBtn) {
                 if(radioBtn[i].checked) {
-                    radioCheck = true;
-                    selectedPerson = document.querySelectorAll('*[data-id]');
+                    for(let j in userData) {
+                        if (nameBtn[i].innerHTML === userData[j].name) {
+                            console.log('Hip-Hip');
+                            radioCheck = true;
+                            selectedPerson = j;
+                        }
+                    }
                 }    
             }
-            console.log(selectedPerson);
             if(document.getElementById('example').value > choseCarElement.count) {
                 // alert('Congrat');
                 alert('You have choosen to much items');
@@ -377,7 +382,8 @@ const showUsersToSelect = () => {
             wrapper.setAttribute('data-id', i)
             wrapper.classList.add('user')
 
-            let personName = document.createElement('div')
+            let personName = document.createElement('div');
+            personName.setAttribute('data-name', 'name');
             personName.innerHTML = `${userData[i].name}`
 
             let checkparent = document.createElement('div');
