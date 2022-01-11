@@ -17,17 +17,10 @@ a {
 .previous {
     margin: 25px 50px;
     max-width: 8%;
-    /* background-color: #f1f1f1; */
-    /* color: black; */
-    /* border-radius: 50%; */
     background-color: #131210;
     color: white;
     border-radius: 15px;
-    border: 2px solid white;
-    /* display: flex; */
-    /* justify-content: space-between; */
-    padding: 10px 12px;
-    font-size: 16px;
+    border: 1px solid white;
     cursor: pointer;
 }
 
@@ -116,7 +109,7 @@ body {
 
 /* Form */
 
-#info-car {
+.info-car {
     display: flex;
     color: white;
     font-size: 30px;
@@ -171,7 +164,7 @@ body {
 }
 
 .frame-short {
-    height: 100px;
+    height: 75px;
     margin-top: 50px;
     box-shadow: 0px 2px 7px rgba(0,0,0,0.1);
 }
@@ -652,14 +645,17 @@ a.btn-goback:hover {
 /* Dropdown */
 
 .dropbtn {
-    background-color: #131210;
+    /* background-color: #131210; */
     color: white;
     display: flex;
-    border-radius: 15px;
-    border: 2px solid white;
+    /* border-radius: 15px; */
+    border: 1px solid white;
     justify-content: space-between;
-    padding: 10px 25px;
+    padding: 10px 15px;
     font-size: 16px;
+
+    align-items: center;
+    border-radius: 15px;
     cursor: pointer;
 }
 
@@ -694,6 +690,10 @@ a.btn-goback:hover {
     background: black;
 } */
 
+.profile-text {
+    padding-right: 15px;
+}
+
 .paragraph {
     /* background-color: #131210; */
     color: rgb(255, 255, 255);
@@ -715,8 +715,7 @@ a.btn-goback:hover {
 }
 
 .show {
-    display: block;
-    
+    display: block; 
 }
 
 .crud {
