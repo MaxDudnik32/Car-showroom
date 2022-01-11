@@ -11,8 +11,23 @@ checkStatus();
 // Form
 
 document.getElementById('login').addEventListener('click', function() {
+    document.getElementById('frame').classList.remove('frame-short');
+    document.getElementById('frame').classList.remove('frame-middle');
+    document.getElementById('frame').classList.remove('frame-long');
+    document.getElementById('nav').classList.remove('nav-up');
+    document.getElementById('form-signup').classList.remove('form-signup-down');
+    document.getElementById('success').classList.remove('success-left');
+    document.getElementById('form-signin').classList.remove('form-signin-left');
+    document.getElementById('form-signup').classList.remove('form-signup-left');
     document.getElementById('logoForm').classList.remove('hidden');
     document.getElementById('loginNav').classList.add('hidden');
+    document.getElementById('signup-inactive').classList.add('signup-inactive');
+    document.getElementById('signup-inactive').classList.remove('signup-active');
+    document.getElementById('signin-active').classList.remove('signin-inactive');
+    let form = document.getElementById('form-signup');
+    form.elements.username.value = '';
+    form.elements.email.value = '';
+    form.elements.password.value = '';
     loadSignIn();
 })
 
@@ -51,7 +66,8 @@ document.getElementById('previous').addEventListener('click', function() {
     // Main-product
     document.getElementById('main-products').classList.remove('main-products');
     document.getElementById('main-products').classList.add('hidden');
-    document.getElementById('info-car').classList.add('hidden');
+    document.getElementById('info-car').classList.remove('info-car');
+    document.getElementById('info-car').innerHTML = '';
     //Crud
     document.getElementById('crud').innerHTML = '';
 })
@@ -96,10 +112,9 @@ function myFunction() {
 window.onclick = function(event) {
   if ((!event.target.matches('.dropbtn')) && (!event.target.matches('.dropbtntext'))) {
 
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
+    let dropdowns = document.getElementsByClassName("dropdown-content");
+    for (let i = 0; i < dropdowns.length; i++) {
+      let openDropdown = dropdowns[i];
       if (openDropdown.classList.contains('show')) {
         openDropdown.classList.remove('show');
       }
