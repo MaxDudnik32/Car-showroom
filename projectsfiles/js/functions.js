@@ -123,7 +123,7 @@ const checkManager = () => {
 
 const quit = () => {
     if(confirm("Are you sure to quit form account?")) {
-        localStorage.setItem('loginpers', JSON.stringify([]));
+        localStorage.removeItem('loginpers', JSON.stringify());
         document.getElementById('mainMenu').classList.add('hidden');
         document.getElementById('loginNav').classList.remove('hidden');
     }
@@ -273,6 +273,7 @@ const showProductInfo = (checkInfo) => {
     imgParents.classList.add('car-elements');
 
     const infoCar = document.getElementById('info-car');
+    infoCar.classList.add('info-car');
 
     if(checkInfo) {
         const choseElement = document.createElement('img');
@@ -456,10 +457,19 @@ const showCar = () => {
         const logoParent = document.getElementById('logoCar');
         const carParent = document.getElementById('car');
 
+        let carChild = document.createElement('img');
+        carChild.src = 'images/cars/' + (i+1) + '.png';
+
         let logoChild = document.createElement('img');
         logoChild.classList.add('logoCarImg');
         logoChild.setAttribute('data-id', i);
-        logoChild.src = 'images/logos/' + (i+1) + '.png';
+        if(i === 0) {
+            logoChild.src = 'images/logos/' + 'active' + (i+1) + '.png';
+            carParent.appendChild(carChild);
+            activeCar = 0;
+        } else {
+            logoChild.src = 'images/logos/' + (i+1) + '.png';
+        }
         logoParent.appendChild(logoChild);
 
         let parentElement = document.querySelectorAll(`${('[data-id]')}`);
@@ -467,12 +477,12 @@ const showCar = () => {
         parentElement[i].addEventListener('click', function() {
             let someElement = document.querySelectorAll(`${('[data-id]')}`);
             for(let j = 0; j < cars.length; j++) {
-                 if(i === j) {
-                     someElement[j].src = 'images/logos/' + 'active' + (j+1) + '.png';
-                     activeCar = i;
-                 } else {
-                     someElement[j].src = 'images/logos/' + (j+1) + '.png';
-                 }
+                if(i === j) {
+                    someElement[j].src = 'images/logos/' + 'active' + (j+1) + '.png';
+                    activeCar = i;
+                } else {
+                    someElement[j].src = 'images/logos/' + (j+1) + '.png';
+                }
             }
 
             carParent.appendChild(carChild);
@@ -481,12 +491,7 @@ const showCar = () => {
                 carParent.removeChild(carParent.firstChild);
             }
             carParent.appendChild(carChild);
-
-            let parentElement = document.querySelectorAll(`${('[data-id]')}`);
         })
-
-        let carChild = document.createElement('img');
-        carChild.src = 'images/cars/' + (i+1) + '.png';
     }
 }
 
