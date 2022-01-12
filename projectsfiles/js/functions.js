@@ -32,10 +32,20 @@ const checkLocal = () => {
 
 const orderMessage = (order, checkOrder, sellPers) => {
     const orderParent = document.getElementById('chose-car');
-    orderParent.innerHTML = "";
+    orderParent.classList.add('padding-car');
+    orderParent.innerHTML = `
+    <div id="close-car-btn" class="close-car">
+        <i class="fas fa-times"></i>
+    </div>
+    `;
     orderParent.classList.remove('hidden');
 
+    document.getElementById('close-car-btn').addEventListener('click', function() {
+        document.getElementById('chose-car').classList.add('hidden');
+    })
+
     const orderText = document.createElement('div');
+    orderText.classList.add('order-text')
     if(order.length > 1) {
         orderText.innerHTML = 'You achived ' + order.length + ' orders!';
     } else {
@@ -51,6 +61,7 @@ const orderMessage = (order, checkOrder, sellPers) => {
 
     const acceptBtn = document.createElement('a');
     acceptBtn.classList.add('get-info');
+    acceptBtn.classList.add('get-info-car');
     acceptBtn.innerHTML = 'Accept all';
     acceptBtn.addEventListener('click', function() {
         orderParent.classList.add('hidden');
@@ -107,6 +118,23 @@ const completeOrder = (carName, detailName, countName, orderedPersonName, ordere
     }
 }
 
+// Previous
+
+const previousBtn = () => {
+    unhideElements();
+    // Previous Btn
+    document.getElementById('previous').classList.add('hidden');
+    // Main-product
+    document.getElementById('main-products').classList.remove('main-products');
+    document.getElementById('main-products').classList.add('hidden');
+    document.getElementById('info-car').classList.remove('info-car');
+    document.getElementById('info-car').innerHTML = '';
+    //Crud
+    document.getElementById('crud').innerHTML = '';
+    // Bucket
+    document.getElementById('show-buy-info').classList.add('hidden');
+}
+
 // Drop down
 
 const checkEntry = () => {
@@ -123,9 +151,10 @@ const checkManager = () => {
 
 const quit = () => {
     if(confirm("Are you sure to quit form account?")) {
-        localStorage.removeItem('loginpers', JSON.stringify());
+        localStorage.removeItem('loginpers', JSON.stringify([]));
         document.getElementById('mainMenu').classList.add('hidden');
         document.getElementById('loginNav').classList.remove('hidden');
+        previousBtn();
     }
 }
 
@@ -180,6 +209,8 @@ const unhideElements = () => {
 
 const showCRUD = () => {
     document.getElementById('previous').classList.remove('hidden');
+    document.getElementById('info-car').classList.remove('info-car');
+    document.getElementById('info-car').classList.add('hidden');
     hideElements();
     showUsers();
 }
@@ -370,10 +401,15 @@ const showUsersToSelect = () => {
     parentUsersToSelect.appendChild(checkParentss);
 
     let sellUserInfo = document.createElement('div');
-    if(JSON.parse(localStorage.getItem('loginpers')).postlog) {
-        sellUserInfo.innerHTML = "Choose person from whom you want to buy it" ;
+    console.log(userData);
+    if(userData.length < 2) {
+        sellUserInfo.innerHTML = "Nobody sells this product";
     } else {
-        sellUserInfo.innerHTML = "Choose person to whom you want to sell it";
+        if(JSON.parse(localStorage.getItem('loginpers')).postlog) {
+            sellUserInfo.innerHTML = "Choose person from whom you want to buy it" ;
+        } else {
+            sellUserInfo.innerHTML = "Choose person to whom you want to sell it";
+        }
     }
     checkParentss.appendChild(sellUserInfo);
 
@@ -404,14 +440,24 @@ const showUsersToSelect = () => {
 
 const showBuyInfo = (product, choseCarElement, selectedPerson) => {
     const buyInfo = document.getElementById('show-buy-info');
-    buyInfo.innerHTML = '';
+    buyInfo.innerHTML = `
+    <div id="close-bucket-btn" class="close-buck">
+        <i class="fas fa-times"></i>
+    </div>
+    `;
     buyInfo.classList.remove('hidden');
+
+    const closeBucket = document.getElementById('close-bucket-btn');
+    closeBucket.addEventListener('click', function() {
+        buyInfo.classList.add('hidden');
+    })
 
     const elementInfo = document.createElement('div');
     elementInfo.innerHTML = "You have choosen " + product.mark + " car to buy " + choseCarElement.name;
     buyInfo.appendChild(elementInfo);
 
     const costElement = document.createElement('div');
+    costElement.classList.add('cost-text');
     costElement.innerHTML = "Transaction price is: " + choseCarElement.price + "$ * " + document.getElementById('example').value + "items = " + (choseCarElement.price * document.getElementById('example').value) + "$"; 
     buyInfo.appendChild(costElement);
 
@@ -503,9 +549,10 @@ const showSignForm = () => {
     document.getElementById('frame').classList.add('frame-long');
     document.getElementById('signup-inactive').classList.remove('signup-inactive');
     document.getElementById('signup-inactive').classList.add('signup-active');
+    document.getElementById('signin-active').classList.remove('signin-active');
     document.getElementById('signin-active').classList.add('signin-inactive');
-    document.getElementById('forgot').classList.add('forgot-left');
-    //this.classList.remove("idle").classList.add("active");
+    // document.getElementById('forgot').classList.add('forgot-left');
+    // this.classList.remove("idle").classList.add("active");
 }
 
 const showSignInForm = () => {
@@ -517,10 +564,11 @@ const showSignInForm = () => {
     document.getElementById('signup-inactive').classList.add('signup-inactive');
     document.getElementById('signin-active').classList.add('signin-active');
     document.getElementById('forgot').classList.remove('forgot-left');
-    //this.classList.remove("idle").classList.add("active");
+    // this.classList.remove("idle").classList.add("active");
 }
 
 const loadSignIn = () => {
+    console.log('WTF?');
     document.getElementById('btn-animate').classList.remove('btn-animate-grow');
     document.getElementById('welcome').classList.remove('welcome-left');
     document.getElementById('profile-photo').classList.remove('profile-photo-down');
@@ -807,7 +855,7 @@ function showBtn(i, parentCrud, crudTrPerson, crudTd4){
                 userData.splice(id, 1);
                 localStorage.setItem('users',JSON.stringify(userData))
                 showUsers();
-                localStorage.setItem('loginpers', JSON.stringify([]));
+                localStorage.removeItem('loginpers', JSON.stringify());
                 document.getElementById('mainMenu').classList.add('hidden');
                 document.getElementById('loginNav').classList.remove('hidden');
                 unhideElements();
