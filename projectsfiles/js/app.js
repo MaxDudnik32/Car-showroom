@@ -24,10 +24,13 @@ document.getElementById('login').addEventListener('click', function() {
     document.getElementById('signup-inactive').classList.add('signup-inactive');
     document.getElementById('signup-inactive').classList.remove('signup-active');
     document.getElementById('signin-active').classList.remove('signin-inactive');
-    let form = document.getElementById('form-signup');
-    form.elements.username.value = '';
-    form.elements.email.value = '';
-    form.elements.password.value = '';
+    let formup = document.getElementById('form-signup');
+    formup.elements.username.value = '';
+    formup.elements.email.value = '';
+    formup.elements.password.value = '';
+    let formin = document.getElementById('form-signin');
+    formin.elements.username.value = '';
+    formin.elements.password.value = '';
     loadSignIn();
 })
 
@@ -48,6 +51,7 @@ document.getElementById('btn-signup').addEventListener('click', function() {
 
 document.getElementById('btn-signin').addEventListener('click', function() {
     checkLogin();
+    setTimeout(checkOrder, 5000);
 })
 
 document.getElementById('btn-save').addEventListener('click', function() {
@@ -60,16 +64,7 @@ document.getElementById('btn-save').addEventListener('click', function() {
 // Previous page 
 
 document.getElementById('previous').addEventListener('click', function() {
-    unhideElements();
-    // Previous Btn
-    document.getElementById('previous').classList.add('hidden');
-    // Main-product
-    document.getElementById('main-products').classList.remove('main-products');
-    document.getElementById('main-products').classList.add('hidden');
-    document.getElementById('info-car').classList.remove('info-car');
-    document.getElementById('info-car').innerHTML = '';
-    //Crud
-    document.getElementById('crud').innerHTML = '';
+    previousBtn();
 })
 
 // Car page
