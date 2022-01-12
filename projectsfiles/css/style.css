@@ -524,7 +524,7 @@ a.btn-signup:hover, a.btn-signin:hover {
 
 .welcome {
     width: 100%;
-    height: 50px;
+    height: 20px;
     position: relative;
     color: rgba(35,43,85,0.75);
     opacity: 0;
@@ -532,7 +532,7 @@ a.btn-signup:hover, a.btn-signin:hover {
 }
 
 .welcome-left {
-    transform: translateY(-780px);
+    transform: translateY(-870px);
     opacity: 1;
 }
 
@@ -757,10 +757,13 @@ a.btn-goback:hover {
 }
 
 .frame-info {
+    padding: 34px;
+    font-size: 20px;
+    color: white;
     position: absolute;
     top: 20%;
     left: 35%;
-    height: 575px;
+    height: 370px;
     width: 430px;
     background: linear-gradient( rgba(35,43,85,0.75), rgba(35,43,85,0.95))
             /* , url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/clouds-cloudy-forest-mountain.jpg)*/
@@ -773,6 +776,10 @@ a.btn-goback:hover {
     box-shadow: 0px 2px 7px rgb(0 0 0 / 20%);
     overflow: hidden;
     transition: all .5s ease;
+}
+
+.cost-text {
+    padding: 20px 0;
 }
 
 /* Dynmic car */
@@ -823,6 +830,15 @@ a.btn-goback:hover {
     padding: 10px 30px;
 }
 
+.padding-car {
+    padding: 20px;
+}
+
+.order-text {
+    padding: 0 0 20px 0;
+    font-size: 30px;
+}
+
 .opacity {
     opacity: 0.9;
 }
@@ -844,6 +860,10 @@ a.btn-goback:hover {
     background: #135ec5;
     position: relative;
     border-radius: 15px;
+}
+
+.get-info-car {
+    margin: 20px 0;
 }
 
 .motor-detail {
@@ -899,6 +919,16 @@ td {
 .close {
     font-size: 28px;
     padding: 15px 25px;
+}
+
+.close-car {
+    font-size: 28px;
+    padding: 15px 0;
+}
+
+.close-buck {
+    font-size: 28px;
+    padding: 5px 0px;
 }
 
 /* Show buy info */
