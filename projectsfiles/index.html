@@ -43,7 +43,17 @@
     </header>
     <main id="main" class="main">
         <!-- Previous button -->
-        <a href="#" id="previous" class="previous hidden">&#8249; Come back</a>
+
+        <!-- <a href="#" id="previous" class="previous hidden">&#8249; Come back</a> -->
+
+        <div id="back-wrapper" class="back-wrapper hidden">
+            <div id="previous" class="previous">
+                <a class="back-icon" href="#">&#8249; </a>
+            </div>
+            <div id="come-back-text" class="come-back-text">Come back</div>
+        </div>
+
+        <!-- Main Page -->
 
         <div id="mainCar" class="mainCar">
             <div id="logoCar">
@@ -55,7 +65,7 @@
         </div>
         <a href="#" id="carPage" class="carPage">Go to car page</a>
 
-<!--        Form -->
+        <!--Form -->
 
         <div id = "logoForm" class="container hidden">
             <div id="frame" class="frame">
@@ -125,13 +135,20 @@
 
         </div>
 
+        <!-- Buy Car Page -->
+
         <div id="main-products">
 
         </div>
 
+        <!-- CRUD Page -->
+
         <div id="crud" class="crud">
                 
         </div>
+
+        <!-- Edit Crud Form -->
+
         <div id="crudframe" class="hidden">
             <form id="form-crud" class="form-signin hidden" action="" method="post" name="saveForm">
                 <div id="editform" class="editform">Edit form</div>
@@ -157,11 +174,13 @@
             <div>Buy-info</div>
         </div>
     </main>
+
     <!-- Chose car -->
 
     <div id="chose-car" class="chose-car hidden">
         
     </div>
+
     <footer>
 
     </footer>
