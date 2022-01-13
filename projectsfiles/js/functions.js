@@ -123,7 +123,7 @@ const completeOrder = (carName, detailName, countName, orderedPersonName, ordere
 const previousBtn = () => {
     unhideElements();
     // Previous Btn
-    document.getElementById('previous').classList.add('hidden');
+    document.getElementById('back-wrapper').classList.add('hidden');
     // Main-product
     document.getElementById('main-products').classList.remove('main-products');
     document.getElementById('main-products').classList.add('hidden');
@@ -208,7 +208,7 @@ const unhideElements = () => {
 }
 
 const showCRUD = () => {
-    document.getElementById('previous').classList.remove('hidden');
+    document.getElementById('back-wrapper').classList.remove('hidden');
     document.getElementById('info-car').classList.remove('info-car');
     document.getElementById('info-car').classList.add('hidden');
     hideElements();
@@ -256,7 +256,7 @@ const charCar = () => {
         if(checkManager() === true) {
             showUsersToSelect();
         }
-        document.getElementById('previous').classList.remove('hidden')
+        document.getElementById('back-wrapper').classList.remove('hidden')
     })
     charCarWrap.appendChild(carInfoBtn);
 
@@ -285,7 +285,7 @@ const charCar = () => {
         if(checkManager() === true) {
             showUsersToSelect();
         }
-        document.getElementById('previous').classList.remove('hidden')
+        document.getElementById('back-wrapper').classList.remove('hidden')
     })
     charMotorWrap.appendChild(motorInfoBtn);
 }
@@ -293,7 +293,7 @@ const charCar = () => {
 // Dynamic car
 
 const showProductInfo = (checkInfo) => {
-    const main = document.getElementById('main');
+    // const main = document.getElementById('main');
 
     const productParent = document.getElementById('main-products');
     productParent.classList.add('main-products');
@@ -318,16 +318,22 @@ const showProductInfo = (checkInfo) => {
         infoCar.innerHTML = cars[activeCar].mark + " car " + cars[activeCar].details[1].name + " detail";
     }
 
+    const infoCarParent = document.createElement('div');
+    infoCarParent.classList.add('info-car-parent');
+
     const buyParent = document.createElement('div');
     buyParent.setAttribute('id', 'buy-parent');
 
     const checkParents = document.createElement('div');
     checkParents.setAttribute('id', 'selected-parents');
+    console.log(checkParents);
 
     
     productParent.appendChild(imgParents);
-    productParent.appendChild(buyParent);
-    productParent.appendChild(checkParents);
+    productParent.appendChild(infoCarParent);
+    infoCarParent.appendChild(buyParent);
+    infoCarParent.appendChild(checkParents);
+    console.log(infoCarParent)
 }
 
 const showProductsDetails = (carIndex, elementToBuy) => {
@@ -342,27 +348,30 @@ const showProductsDetails = (carIndex, elementToBuy) => {
     nameElement.innerHTML = product.mark + " " + choseCarElement.name;
     wrapper.appendChild(nameElement);
 
-    const priceElement = document.createElement('div');
-    priceElement.innerHTML = "The price of this item is: " + choseCarElement.price + "$";
-    wrapper.appendChild(priceElement);
-
-    const amountElement = document.createElement('div');
-    amountElement.innerHTML = "The amount of this item is: " + choseCarElement.count + " items";
-    wrapper.appendChild(amountElement);
-
     if(checkManager() === true) {
+        const buyBtnInfoWrapper = document.createElement('div');
+        buyBtnInfoWrapper.classList.add('buy-btn-wrapper');
+
+        const buyWrapper = document.createElement('div');
+        buyWrapper.classList.add('buy-wrapper');
+        buyWrapper.innerHTML = `<i class="fas fa-credit-card"></i>`;
+
         const buyAmount = document.createElement('input');
         buyAmount.setAttribute('type', 'text');
         buyAmount.setAttribute('id', 'example');
-        wrapper.appendChild(buyAmount);
-    }
+        buyAmount.classList.add('buy-input');
 
-    if(checkManager() === true) {
-        const buyButton = document.createElement('input');
-        buyButton.setAttribute('type', 'button');
-        buyButton.setAttribute('value', 'Buy');
+        const buyButton = document.createElement('a');
+        buyButton.innerHTML = "Buy now";
         buyButton.setAttribute('id', 'buyButton');
-        buyButton.addEventListener('click', function() {
+        buyButton.classList.add('buy-btn');
+
+        wrapper.appendChild(buyBtnInfoWrapper);
+        buyBtnInfoWrapper.appendChild(buyAmount);
+        buyBtnInfoWrapper.appendChild(buyWrapper);
+        buyWrapper.appendChild(buyButton);
+
+        buyWrapper.addEventListener('click', function() {
             const radioBtn = document.querySelectorAll('[name*="radio"]');
             const nameBtn = document.querySelectorAll('[data-name*="name"]');
             let radioCheck = false;
@@ -387,8 +396,16 @@ const showProductsDetails = (carIndex, elementToBuy) => {
                 showBuyInfo(product, choseCarElement, selectedPerson);
             }
         })
-        wrapper.appendChild(buyButton);
     }
+
+    const priceElement = document.createElement('div');
+    priceElement.innerHTML = "The price of this item is: " + choseCarElement.price + "$";
+    wrapper.appendChild(priceElement);
+
+    const amountElement = document.createElement('div');
+    amountElement.innerHTML = "The amount of this item is: " + choseCarElement.count + " items";
+    wrapper.appendChild(amountElement);
+
 }
 
 const showUsersToSelect = () => {
@@ -398,7 +415,7 @@ const showUsersToSelect = () => {
     checkParentss.classList.add('selected-parents');
 
     let parentUsersToSelect = document.getElementById('main-products');
-    parentUsersToSelect.appendChild(checkParentss);
+    // parentUsersToSelect.appendChild(checkParentss);
 
     let sellUserInfo = document.createElement('div');
     console.log(userData);
@@ -860,7 +877,7 @@ function showBtn(i, parentCrud, crudTrPerson, crudTd4){
                 document.getElementById('loginNav').classList.remove('hidden');
                 unhideElements();
                 document.getElementById('crud').innerHTML = '';
-                document.getElementById('previous').classList.add('hidden');
+                document.getElementById('back-wrapper').classList.add('hidden');
             }
         })
 
