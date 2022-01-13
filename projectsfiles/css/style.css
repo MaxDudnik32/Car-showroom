@@ -1,3 +1,7 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 a {
     text-decoration: none;
 }
@@ -15,7 +19,7 @@ a {
 }
   
 .previous {
-    margin: 25px 50px;
+    margin: 25px 10px 25px 30px;
     max-width: 8%;
     background-color: #131210;
     color: white;
@@ -24,6 +28,18 @@ a {
     cursor: pointer;
 }
 
+.come-back-text {
+    color: white;
+}
+
+.back-icon {
+    color: white;
+}
+
+.back-wrapper {
+    display: flex;
+    align-items: center;
+}
 
 /* Com */
 
@@ -785,6 +801,7 @@ a.btn-goback:hover {
 /* Dynmic car */
 
 .main-products {
+    margin: 0 auto;
     color: white;
     display: flex;
     justify-content: space-around;
@@ -794,11 +811,39 @@ a.btn-goback:hover {
     color: white;
     display: flex;
     flex-direction: column;
-    max-width: 25%;
+    max-width: 50%;
 }
 
 .selected-parents {
     color: white;
+}
+
+.info-car-parent {
+    display: flex;
+    flex-direction: column;
+}
+
+.buy-input {
+    padding: 10px;
+    font-size: 20px;
+    border: none;
+    height: 45px;
+    max-width: 15%;
+    border-radius: 10px;
+}
+
+.buy-btn-wrapper {
+    display: flex;
+}
+
+.buy-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 25px;
+    margin: 0 30px;
+    border-radius: 10px;
+    background: #fe696a;;
 }
 
 /* Chose car */
