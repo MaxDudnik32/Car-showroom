@@ -846,6 +846,24 @@ a.btn-goback:hover {
     background: #fe696a;;
 }
 
+.name-info {
+    font-size: 40px;
+}
+
+.price-info {
+    padding: 3px 15px 10px 0;
+    font-size: 25px;
+}
+
+.buy-parent {
+    padding: 0 0 10px;
+}
+
+.info-product-wrapper {
+    display: flex;
+    align-items: center;
+}
+
 /* Chose car */
 
 .chose-car {
