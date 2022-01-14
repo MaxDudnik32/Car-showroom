@@ -13,7 +13,7 @@ const checkOrder = () => {
         for(let i = 0; i < checkOrder.length; i++) {
             if(checkOrder[i].name === orderPers.nameLog) {
                 if(checkOrder[i].order) {
-                    if(checkOrder[i].order[0][4] === false) {
+                    if(checkOrder[i].order[0].status === false) {
                         orderMessage(checkOrder[i].order, i, checkOrder[i]);
                     }
                 }
@@ -55,7 +55,7 @@ const orderMessage = (order, checkOrder, sellPers) => {
 
     for(let i = 0; i < order.length; i++) {
         const infoOrder = document.createElement('div');
-        infoOrder.innerHTML = 'The order is: ' + order[i][0] + ' car ' + order[i][1] + ' model ' + order[i][2] + ' count from ' + order[i][3];
+        infoOrder.innerHTML = 'The order is: ' + order[i].carMark + ' car ' + order[i].carProduct + ' model ' + order[i].productCount + ' count from ' + order[i].orderedName;
         orderParent.appendChild(infoOrder);
     }
 
@@ -66,7 +66,7 @@ const orderMessage = (order, checkOrder, sellPers) => {
     acceptBtn.addEventListener('click', function() {
         orderParent.classList.add('hidden');
         for(let i = 0; i < order.length; i++) {
-            completeOrder(order[i][0], order[i][1], order[i][2], order[i][3], checkOrder, i);
+            completeOrder(order[i].carMark, order[i].carProduct, order[i].productCount, order[i].orderedName, checkOrder, i);
         }
     })
     orderParent.appendChild(acceptBtn);
@@ -74,14 +74,19 @@ const orderMessage = (order, checkOrder, sellPers) => {
 
 const completeOrder = (carName, detailName, countName, orderedPersonName, orderedPerson, currentOrder) => {
     const checkOrder = JSON.parse(localStorage.getItem('users'));
-    checkOrder[orderedPerson].order[currentOrder][4] = true;
+    checkOrder[orderedPerson].order[currentOrder].status = true;
     console.log(checkOrder[orderedPerson].order[currentOrder][4]);
     for(let i = 0; i < checkOrder.length; i++) {
         if(checkOrder[i].name === orderedPersonName) {
-            let boughtArr = [carName, 
-                detailName,
-                countName,
-                checkOrder[orderedPerson].name];
+            let boughtArr = {
+                carName: carName, 
+                detailName: detailName,
+                countName: countName,
+                orderedName: checkOrder[orderedPerson].name};
+            // let boughtArr = [carName, 
+            //     detailName,
+            //     countName,
+            //     checkOrder[orderedPerson].name];
             if(checkOrder[i].bought) {
                 checkOrder[i].bought.push(boughtArr);
             } else {
@@ -323,6 +328,7 @@ const showProductInfo = (checkInfo) => {
 
     const buyParent = document.createElement('div');
     buyParent.setAttribute('id', 'buy-parent');
+    buyParent.classList.add('buy-parent');
 
     const checkParents = document.createElement('div');
     checkParents.setAttribute('id', 'selected-parents');
@@ -345,8 +351,22 @@ const showProductsDetails = (carIndex, elementToBuy) => {
     wrapper.innerHTML = "";
 
     const nameElement = document.createElement('div');
+    nameElement.classList.add('name-info');
     nameElement.innerHTML = product.mark + " " + choseCarElement.name;
     wrapper.appendChild(nameElement);
+
+    const infoProductWrapper = document.createElement('div');
+    infoProductWrapper.classList.add('info-product-wrapper');
+    wrapper.appendChild(infoProductWrapper);
+
+    const priceElement = document.createElement('div');
+    priceElement.innerHTML = choseCarElement.price + ".00 $";
+    priceElement.classList.add('price-info');
+    infoProductWrapper.appendChild(priceElement);
+
+    const amountElement = document.createElement('div');
+    amountElement.innerHTML = "(" + choseCarElement.count + " in stock)";
+    infoProductWrapper.appendChild(amountElement);
 
     if(checkManager() === true) {
         const buyBtnInfoWrapper = document.createElement('div');
@@ -397,15 +417,6 @@ const showProductsDetails = (carIndex, elementToBuy) => {
             }
         })
     }
-
-    const priceElement = document.createElement('div');
-    priceElement.innerHTML = "The price of this item is: " + choseCarElement.price + "$";
-    wrapper.appendChild(priceElement);
-
-    const amountElement = document.createElement('div');
-    amountElement.innerHTML = "The amount of this item is: " + choseCarElement.count + " items";
-    wrapper.appendChild(amountElement);
-
 }
 
 const showUsersToSelect = () => {
@@ -423,7 +434,7 @@ const showUsersToSelect = () => {
         sellUserInfo.innerHTML = "Nobody sells this product";
     } else {
         if(JSON.parse(localStorage.getItem('loginpers')).postlog) {
-            sellUserInfo.innerHTML = "Choose person from whom you want to buy it" ;
+            sellUserInfo.innerHTML = "Choose supplier" ;
         } else {
             sellUserInfo.innerHTML = "Choose person to whom you want to sell it";
         }
@@ -497,7 +508,12 @@ const showBuyInfo = (product, choseCarElement, selectedPerson) => {
 
 const saveOrder = (person, product, count) => {
     let orderedPerson = JSON.parse(localStorage.getItem('loginpers')).nameLog; 
-    let order = [cars[activeCar].mark, product, count, orderedPerson, false];
+    let order = {carMark: cars[activeCar].mark, 
+            carProduct: product, 
+            productCount: count, 
+            orderedName: orderedPerson, 
+            status: false};
+    // let order = [cars[activeCar].mark, product, count, orderedPerson, false];
     let mainUsers = JSON.parse(localStorage.getItem('users'));
     let currentOrder = mainUsers[person].order;
     if(currentOrder === undefined) {
@@ -925,7 +941,7 @@ const showBought = (order, namePers) => {
     for(let i = 0; i < order.length; i++) {
         const boughtText = document.createElement('div');
         boughtText.classList.add('bought-text');
-        boughtText.innerHTML = namePers + ' have bought ' + order[i][2] + ' ' + order[i][0] + ' ' + order[i][1] + ' from ' + order[i][3];
+        boughtText.innerHTML = namePers + ' have bought ' + order[i].productCount + ' ' + order[i].carMark + ' ' + order[i].carProduct + ' from ' + order[i].orderedName;
         infoBuyWrapper.appendChild(boughtText);
     }
 }
