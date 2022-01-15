@@ -160,12 +160,26 @@ const checkManager = () => {
 }
 
 const quit = () => {
-    if(confirm("Are you sure to quit form account?")) {
-        localStorage.removeItem('loginpers', JSON.stringify([]));
-        document.getElementById('mainMenu').classList.add('hidden');
-        document.getElementById('loginNav').classList.remove('hidden');
-        previousBtn();
-    }
+    // new swal({
+    //     title: "Are you sure?",
+    //     text: "Once deleted, you will not be able to recover this imaginary file!",
+    //     icon: "warning",
+    //     buttons: true,
+    //     dangerMode: true,
+    // })
+    //     .then((willDelete) => {
+    //         if (willDelete) {
+    //             swal("Poof! Your imaginary file has been deleted!", {
+    //             icon: "success",
+    //             });
+    //             localStorage.removeItem('loginpers', JSON.stringify([]));
+    //             document.getElementById('mainMenu').classList.add('hidden');
+    //             document.getElementById('loginNav').classList.remove('hidden');
+    //             previousBtn();
+    //         } else {
+    //             swal("You are still here!");
+    //         }
+    // });
 }
 
 const changePost = () => {
@@ -411,10 +425,17 @@ const showProductsDetails = (carIndex, elementToBuy) => {
                 }    
             }
             if(document.getElementById('example').value > choseCarElement.count) {
-                // alert('Congrat');
-                alert('You have choosen to much items');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You have choosen to much items',
+                })
             } else if(radioCheck != true) {
-                alert('You need to choose user!');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You need to choose user!',
+                })
             } else {
                 showBuyInfo(product, choseCarElement, selectedPerson);
             }
@@ -520,10 +541,18 @@ const saveOrder = (person, product, count) => {
     let currentOrder = mainUsers[person].order;
     if(currentOrder === undefined) {
         mainUsers[person].order = [order];
-        alert("You have ordered " + product + " from " + mainUsers[person].name);
+        Swal.fire({
+            icon: 'success',
+            title: 'Congrat!',
+            text: 'You have ordered ' + product + ' from ' + mainUsers[person].name,
+        })
     } else {
         currentOrder.push(order);
-        alert("You have ordered " + product + " from " + mainUsers[person].name);
+        Swal.fire({
+            icon: 'success',
+            title: 'Congrat!',
+            text: 'You have ordered ' + product + ' from ' + mainUsers[person].name,
+        })
     }
     localStorage.setItem('users', JSON.stringify(mainUsers));
     document.getElementById('show-buy-info').classList.add('hidden');
@@ -693,26 +722,50 @@ function isValid(validation, form, formName, valid, checkCrud) {
         if((isValidName(userDat.name)) && (isValidPassword(userDat.password)) && (isValidEmail(userDat.email))) {
             savePerson(userDat, checkCrud);
             if(checkCrud) {
-                alert("Succes editings");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Congrats!',
+                    text: 'Success editing',
+                })
                 formName.classList.add('hidden');
                 document.getElementById('crudframe').classList.add('hidden');
             } else {
                 showSignUp(valid, formName);
             }
         } else if (!isValidName(userDat.name)) {
-            alert("You entered the wrong name");
+            Swal.fire({
+                icon: 'error',
+                title: 'Ooops...',
+                text: 'Your name is incorect',
+            })
         } else if (!isValidEmail(userDat.email)) {
-            alert("Your email is incorrect");
+            Swal.fire({
+                icon: 'error',
+                title: 'Ooops...',
+                text: 'Your email is incorrect',
+            })
         } else if (!isValidPassword(userDat.password)) {
-            alert("In password you need more than 8 elements and one number!");
+            Swal.fire({
+                icon: 'error',
+                title: 'Ooops...',
+                text: 'In password you need more than 8 elements and one number!',
+            })
         } else {
-            alert("You passwords arent correct");
+            Swal.fire({
+                icon: 'error',
+                title: 'Ooops...',
+                text: 'You passwords arent correct',
+            })
         }
 
         // saveValid(userDat);
         
     } else {
-        alert('You provided incomplete information');
+        Swal.fire({
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'You provided incomplete information!',
+        })
     }
 }
 
@@ -782,7 +835,11 @@ const checkLogin = () => {
         }
     }
     if(!check) {
-        alert("Your login/password are wrong!");
+        Swal.fire({
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'Your login/password are wrong!',
+        })
     }
 }
 
@@ -874,7 +931,11 @@ function showBtn(i, parentCrud, crudTrPerson, crudTd4){
             if(userDataBuy[id].bought) {
                 showBought(userDataBuy[id].bought, userDataBuy[id].name);
             } else {
-                alert('No info about this perosn!')
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Oops...',
+                    text: 'We have no info about this person',
+                })
             }
 
             // let info = document.createElement('div')
@@ -898,6 +959,11 @@ function showBtn(i, parentCrud, crudTrPerson, crudTd4){
                 unhideElements();
                 document.getElementById('crud').innerHTML = '';
                 document.getElementById('back-wrapper').classList.add('hidden');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Congrats!',
+                    text: 'You have deleted person!',
+                })
             }
         })
 
