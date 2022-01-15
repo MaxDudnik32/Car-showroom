@@ -615,7 +615,6 @@ const showSignUp = (valid, form) => {
         document.getElementById('nav').classList.toggle('nav-up');
         document.getElementById('form-signup').classList.toggle('form-signup-down'); 
         document.getElementById('success').classList.toggle('success-left');
-        //document.getElementById('frame').classList.add('frame-long');
         document.getElementById('frame').classList.add('frame-short');
         setTimeout(() => document.getElementById('logoForm').classList.add('hidden'), 3000);
         document.getElementById('mainMenu').classList.remove('hidden');
@@ -697,7 +696,6 @@ function isValid(validation, form, formName, valid, checkCrud) {
                 alert("Succes editings");
                 formName.classList.add('hidden');
                 document.getElementById('crudframe').classList.add('hidden');
-                // showSave(formName);
             } else {
                 showSignUp(valid, formName);
             }
