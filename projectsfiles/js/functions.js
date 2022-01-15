@@ -160,43 +160,63 @@ const checkManager = () => {
 }
 
 const quit = () => {
-    // new swal({
-    //     title: "Are you sure?",
-    //     text: "Once deleted, you will not be able to recover this imaginary file!",
-    //     icon: "warning",
-    //     buttons: true,
-    //     dangerMode: true,
-    // })
-    //     .then((willDelete) => {
-    //         if (willDelete) {
-    //             swal("Poof! Your imaginary file has been deleted!", {
-    //             icon: "success",
-    //             });
-    //             localStorage.removeItem('loginpers', JSON.stringify([]));
-    //             document.getElementById('mainMenu').classList.add('hidden');
-    //             document.getElementById('loginNav').classList.remove('hidden');
-    //             previousBtn();
-    //         } else {
-    //             swal("You are still here!");
-    //         }
-    // });
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to leave from account!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, quit!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                'Congrat!',
+                'Your have quited!',
+                'success'
+            )
+            localStorage.removeItem('loginpers', JSON.stringify([]));
+            document.getElementById('mainMenu').classList.add('hidden');
+            document.getElementById('loginNav').classList.remove('hidden');
+            previousBtn();
+        } else {
+            Swal.fire('You are still here!');
+        }
+    })
 }
 
 const changePost = () => {
-    if(confirm("Are you to change a status?")) {
-        previousBtn();
-        let change = document.getElementById('changePost');
-        let post = JSON.parse(localStorage.getItem('loginpers')).postlog;
-        let index = JSON.parse(localStorage.getItem('loginpers'));
-        if(post == false) {
-            index.postlog = true;
-            change.innerHTML = 'Be manager';
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to change the status!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, change!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                'Congrat!',
+                'Your have changed the status',
+                'success'
+            )
+            previousBtn();
+            let change = document.getElementById('changePost');
+            let post = JSON.parse(localStorage.getItem('loginpers')).postlog;
+            let index = JSON.parse(localStorage.getItem('loginpers'));
+            if(post == false) {
+                index.postlog = true;
+                change.innerHTML = 'Be manager';
+            } else {
+                index.postlog = false;
+                change.innerHTML = 'Be user';
+            }
+            localStorage.setItem('loginpers', JSON.stringify(index));
         } else {
-            index.postlog = false;
-            change.innerHTML = 'Be user';
+            Swal.fire('You are still here!');
         }
-        localStorage.setItem('loginpers', JSON.stringify(index));
-    }
+    })
 }
 
 const checkStatus = () => {
@@ -947,24 +967,36 @@ function showBtn(i, parentCrud, crudTrPerson, crudTd4){
         remove.setAttribute('id', 'remove-btn');
         remove.innerHTML = 'Del';
         remove.addEventListener('click', function(){
-            if(confirm('Do you want delete this person?')){
-                const id = crudTrPerson.getAttribute('data-id');
-                parentCrud.innerHTML = "";
-                userData.splice(id, 1);
-                localStorage.setItem('users',JSON.stringify(userData))
-                showUsers();
-                localStorage.removeItem('loginpers', JSON.stringify());
-                document.getElementById('mainMenu').classList.add('hidden');
-                document.getElementById('loginNav').classList.remove('hidden');
-                unhideElements();
-                document.getElementById('crud').innerHTML = '';
-                document.getElementById('back-wrapper').classList.add('hidden');
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Congrats!',
-                    text: 'You have deleted person!',
-                })
-            }
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to delete this person!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Congrat!',
+                        'Your have deleted this person',
+                        'success'
+                    )
+                    const id = crudTrPerson.getAttribute('data-id');
+                    parentCrud.innerHTML = "";
+                    userData.splice(id, 1);
+                    localStorage.setItem('users',JSON.stringify(userData))
+                    showUsers();
+                    localStorage.removeItem('loginpers', JSON.stringify());
+                    document.getElementById('mainMenu').classList.add('hidden');
+                    document.getElementById('loginNav').classList.remove('hidden');
+                    unhideElements();
+                    document.getElementById('crud').innerHTML = '';
+                    document.getElementById('back-wrapper').classList.add('hidden');
+                } else {
+                    Swal.fire('You are still here!');
+                }
+            })
         })
 
         let edit = document.createElement('a');
