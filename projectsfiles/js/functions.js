@@ -533,7 +533,7 @@ const showBuyInfo = (product, choseCarElement, selectedPerson) => {
     buyInfo.appendChild(costElement);
 
     const choosePerson = document.createElement('div');
-    choosePerson.innerHTML = "You want to buy it from " + userData[selectedPerson].name;
+    choosePerson.innerHTML = "You want to buy it from " + userData[selectedPerson].name + '?';
     buyInfo.appendChild(choosePerson);
 
     const buyBtnWrapper = document.createElement('div');
