@@ -51,7 +51,7 @@ document.getElementById('btn-signup').addEventListener('click', function() {
 
 document.getElementById('btn-signin').addEventListener('click', function() {
     checkLogin();
-    setTimeout(checkOrder, 5000);
+    setTimeout(checkOrder, 3000);
 })
 
 document.getElementById('btn-save').addEventListener('click', function() {
