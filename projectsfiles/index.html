@@ -16,14 +16,11 @@
                 <a href="#" id = "login" class="loginLink">Login</a>
             </nav>
             <div id="mainMenu" class="hidden dropdown">
-                <div onclick="myFunction()" class="dropbtn">
-                    <div class="profile-text">PROFILE</div>
-                    <!-- <button class="dropbtn">PROFILE</button> -->
-                    <i onclick="myFunction()" class="fas fa-user-circle"></i>
-                </div>
-                <!-- <div onclick="myFunction()" class="dropbtn">
-                    <div onclick="myFunction()" class="dropbtntext">Profile</div>
-                </div> -->
+                <button onclick="myFunction()" id="drop-btn" class="dropbtn">
+                    PROFILE
+                    <i class="fas fa-user-circle drop-icon"></i>
+                </button>
+
                 <div id="myDropdown" class="dropdown-content">
                     <div onclick="changePost()" class="paragraph">
                         <a id="changePost" class="change-post" href="#enter"></a>
