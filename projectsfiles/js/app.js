@@ -95,6 +95,27 @@ document.getElementById('carPage').addEventListener('click', function() {
     // }
 })
 
+// function myFunction() {
+//     document.getElementById("myDropdown").classList.toggle("show");
+// }
+
+// document.getElementById('drop-btn').addEventListener('click', function() {
+//     myFunction();
+//     // Close the dropdown if the user clicks outside of it
+//     window.onclick = function(event) {
+//       if ((!event.target.matches('.dropbtn')) && (!event.target.matches('.dropbtntext'))) {
+    
+//         let dropdowns = document.getElementsByClassName("dropdown-content");
+//         for (let i = 0; i < dropdowns.length; i++) {
+//           let openDropdown = dropdowns[i];
+//           if (openDropdown.classList.contains('show')) {
+//             openDropdown.classList.remove('show');
+//           }
+//         }
+//       }
+//     }
+// })
+
 // Dropdown function
 
 /* When the user clicks on the button, 
@@ -116,4 +137,10 @@ window.onclick = function(event) {
     }
   }
 }
+
+// let dropdown = document.querySelector(".dropdown-main");
+// dropdown.onclick = function() {
+//     console.log('Hip-Hip!');
+//     dropdown.classList.toggle("active")
+// }
 
