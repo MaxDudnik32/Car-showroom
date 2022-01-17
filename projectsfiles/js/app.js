@@ -78,10 +78,18 @@ document.getElementById('carPage').addEventListener('click', function() {
             document.getElementById('main').classList.add('opacity');
             charCar();
         } else {
-            alert("You need to choose the car!");
+            Swal.fire({
+                icon: 'error',
+                title: 'Ooops...',
+                text: 'You need to choose the car!',
+            })
         }    
     } else {
-        alert("Please login to use our website!");
+        Swal.fire({
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'Please login to use our website!',
+        })
     }
     // if(checkEntry() === true) {
     //     if(activeCar !== undefined) {
