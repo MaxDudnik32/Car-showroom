@@ -745,9 +745,8 @@ function isValid(validation, form, formName, valid, checkCrud) {
         }
 
         if((isValidName(userDat.name)) && (isValidPassword(userDat.password)) && (isValidEmail(userDat.email))) {
-            savePerson(userDat, checkCrud);
             if(checkCrud) {
-                console.log('Editings!');
+                savePerson(userDat, true);
                 Swal.fire({
                     icon: 'success',
                     title: 'Congrats!',
@@ -756,7 +755,7 @@ function isValid(validation, form, formName, valid, checkCrud) {
                 formName.classList.add('hidden');
                 document.getElementById('crudframe').classList.add('hidden');
             } else {
-                console.log('Register!');
+                savePerson(userDat,checkCrud, false);
                 showSignUp(valid, formName);
             }
         } else if (!isValidName(userDat.name)) {
@@ -810,9 +809,9 @@ function isValidEmail(email) {
     return /^((([0-9A-Za-z]{1}[-0-9A-z\.]{1,}[0-9A-Za-z]{1})|([0-9А-Яа-я]{1}[-0-9А-я\.]{1,}[0-9А-Яа-я]{1}))@([-A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,})$/.test(email);
 }
 
-const savePerson = (user, checkCrud) => {
+const savePerson = (user, editcheck) => {
     let myNode = document.getElementById('crud');
-    if(mainId <= userData.length) {
+    if(editcheck) {
         userData[mainId].name = user.name;
         userData[mainId].password = user.password;
         userData[mainId].email = user.email;
@@ -831,12 +830,12 @@ const savePerson = (user, checkCrud) => {
             entry: true,
         }
         localStorage.setItem('loginpers', JSON.stringify(userSignUp));
-        if(checkCrud) {
-            while(myNode.firstChild) {
-                myNode.removeChild(myNode.firstChild);
-            }
-            showUsers();
-        }
+        // if(checkCrud) {
+        //     while(myNode.firstChild) {
+        //         myNode.removeChild(myNode.firstChild);
+        //     }
+        //     showUsers();
+        // }
     }
 }
 
@@ -952,9 +951,6 @@ function showBtn(i, parentCrud, crudTrPerson, crudTd4){
         view.addEventListener('click', function(){
             const id = crudTrPerson.getAttribute('data-id');
             const userDataBuy = JSON.parse(localStorage.getItem('users'));
-            console.log(userData);
-            console.log(id);
-            console.log(userDataBuy[id].bought);
             if(userDataBuy[id].bought) {
                 showBought(userDataBuy[id].bought, userDataBuy[id].name);
             } else {
