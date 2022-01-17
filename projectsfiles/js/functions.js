@@ -527,6 +527,11 @@ const showBuyInfo = (product, choseCarElement, selectedPerson) => {
     elementInfo.innerHTML = "You have choosen " + product.mark + " car to buy " + choseCarElement.name;
     buyInfo.appendChild(elementInfo);
 
+    // const imgChoose = document.createElement('img');
+    // imgChoose.src = 'images/cars/' + (activeCar+1) + '.png';
+    // imgChoose.classList.add('img-buck');
+    // buyInfo.appendChild(imgChoose);
+
     const costElement = document.createElement('div');
     costElement.classList.add('cost-text');
     costElement.innerHTML = "Transaction price is: " + choseCarElement.price + "$ * " + document.getElementById('example').value + "items = " + (choseCarElement.price * document.getElementById('example').value) + "$"; 
@@ -742,6 +747,7 @@ function isValid(validation, form, formName, valid, checkCrud) {
         if((isValidName(userDat.name)) && (isValidPassword(userDat.password)) && (isValidEmail(userDat.email))) {
             savePerson(userDat, checkCrud);
             if(checkCrud) {
+                console.log('Editings!');
                 Swal.fire({
                     icon: 'success',
                     title: 'Congrats!',
@@ -750,6 +756,7 @@ function isValid(validation, form, formName, valid, checkCrud) {
                 formName.classList.add('hidden');
                 document.getElementById('crudframe').classList.add('hidden');
             } else {
+                console.log('Register!');
                 showSignUp(valid, formName);
             }
         } else if (!isValidName(userDat.name)) {
