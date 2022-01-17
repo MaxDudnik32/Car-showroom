@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+html, body * { 
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif; 
+}
+
 a {
     text-decoration: none;
 }
@@ -132,14 +137,12 @@ body {
     justify-content: center;
     margin-top: 10px;
     margin-bottom: 40px;
-    font-family: 'Open Sans', sans-serif;
+    /* font-family: 'Open Sans', sans-serif; */
 }
 
 .container {
     position: absolute;
 }
-
-html, body * { box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
 
 body {
     background:
@@ -775,14 +778,14 @@ a.btn-goback:hover {
 }
 
 .frame-info {
-    padding: 34px;
+    padding: 40px;
     font-size: 20px;
     color: white;
     position: absolute;
     top: 20%;
     left: 35%;
-    height: 370px;
-    width: 430px;
+    height: 350px;
+    width: 515px;
     background: linear-gradient( rgba(35,43,85,0.75), rgba(35,43,85,0.95))
             /* , url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/clouds-cloudy-forest-mountain.jpg)*/
             no-repeat center center; 
@@ -950,13 +953,8 @@ td {
 	text-transform: uppercase;
 	padding: 10px;
 	font-size: 14px;
-	font-family: Courier New;
+	/* font-family: Courier New; */
 }
-
-/* .main-td {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-}  */
 
 /* CRUD btn */
 
@@ -1006,42 +1004,6 @@ td {
     padding: 7px 0;
 }
 
-/* Drop Down */
-
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-} */
-
-/* .container-drop {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    background: #fafafa;
-} */
-
-/* .dropdown-main {
-    position: relative;
-    margin-top: 15px;
-    width: 300px;
-    height: 50px;
-} */
-
-/* .dropdown-main .options {
-    position: absolute;
-    top: 70px;
-    width: 100%;
-    background: #fff;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-    border-radius: 10px;
-    overflow: hidden;
-    display: none;
+.img-buck {
+    max-width: 35%;
 }
-
-.dropdown-main.active .options {
-    display: block;
-} */
