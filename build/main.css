@@ -1,0 +1,960 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body * {
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Com */
+a {
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+}
+
+.previous:hover {
+  background-color: #1f1d19;
+}
+
+.previous {
+  margin: 25px 10px 25px 30px;
+  max-width: 8%;
+  background-color: #131210;
+  color: white;
+  border-radius: 15px;
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+.come-back-text {
+  color: white;
+}
+
+.back-icon {
+  color: white;
+}
+
+.back-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+/* Com */
+body {
+  margin: 0px;
+  overflow: hidden;
+}
+
+.image {
+  max-width: 15%;
+}
+
+.hidden {
+  display: none;
+}
+
+.header {
+  background: #131210;
+}
+
+.mainHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 60px;
+}
+
+.login a {
+  color: black;
+  display: inline-block;
+  font-size: 14px;
+  padding: 15px 30px;
+  background: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 20, 0.4);
+  line-height: 1;
+  position: relative;
+  border-radius: 15px;
+}
+
+.main {
+  min-height: 100vh;
+  background: #131210;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainCar {
+  display: flex;
+  padding: 100px 100px 0px 100px;
+}
+
+#logoCar {
+  display: flex;
+  flex-direction: column;
+}
+
+#car {
+  margin: 0 auto;
+  padding-top: 25px;
+}
+
+.car img {
+  max-width: 100%;
+}
+
+.logoCarImg {
+  max-width: 70%;
+  padding: 15px 0;
+}
+
+.carPage {
+  color: white;
+  display: inline-block;
+  font-size: 14px;
+  padding: 15px 30px;
+  background: #135ec5;
+  text-shadow: 0 -1px 0 rgba(0, 0, 20, 0.4);
+  line-height: 1;
+  position: relative;
+  border-radius: 15px;
+  margin: 0 auto;
+}
+
+/* Form */
+.info-car {
+  display: flex;
+  color: white;
+  font-size: 30px;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
+
+.container {
+  position: absolute;
+}
+
+body {
+  background: linear-gradient(rgba(246, 247, 249, 0.8), rgba(246, 247, 249, 0.8)), no-repeat center center fixed;
+  background-size: cover;
+}
+
+.container {
+  width: 100%;
+  padding-top: 60px;
+  padding-bottom: 100px;
+}
+
+.frame {
+  height: 575px;
+  width: 430px;
+  background: linear-gradient(rgba(35, 43, 85, 0.75), rgba(35, 43, 85, 0.95)), no-repeat center center;
+  background-size: cover;
+  margin-left: auto;
+  margin-right: auto;
+  border-top: solid 1px rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.frame-long {
+  height: 615px;
+}
+
+.frame-short {
+  height: 75px;
+  margin-top: 50px;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.1);
+}
+
+.frame-middle {
+  height: 500px;
+  margin-top: 50px;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.1);
+}
+
+.nav {
+  width: 100%;
+  height: 100px;
+  padding-top: 40px;
+  opacity: 1;
+  transition: all 0.5s ease;
+}
+
+.nav-up {
+  transform: translateY(-100px);
+  opacity: 0;
+}
+
+li {
+  padding-left: 10px;
+  font-size: 18px;
+  display: inline;
+  text-align: left;
+  text-transform: uppercase;
+  padding-right: 10px;
+  color: #ffffff;
+}
+
+.signin-active a {
+  padding-bottom: 10px;
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: solid 2px #1059FF;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.signin-inactive a {
+  padding-bottom: 0;
+  color: rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  border-bottom: none;
+  cursor: pointer;
+}
+
+.signup-active a {
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: solid 2px #1059FF;
+  padding-bottom: 10px;
+}
+
+.signup-inactive a {
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.form-signin {
+  width: 430px;
+  height: 375px;
+  font-size: 16px;
+  font-weight: 300;
+  padding-left: 37px;
+  padding-right: 37px;
+  padding-top: 55px;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.form-signin-left {
+  transform: translateX(-400px);
+  opacity: 0;
+}
+
+.form-signup {
+  width: 430px;
+  height: 375px;
+  font-size: 16px;
+  font-weight: 300;
+  padding-left: 37px;
+  padding-right: 37px;
+  padding-top: 55px;
+  position: relative;
+  top: -375px;
+  left: 400px;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.form-signup-left {
+  transform: translateX(-399px);
+  opacity: 1;
+}
+
+.form-signup-down {
+  top: 0px;
+  opacity: 0;
+}
+
+.success {
+  width: 80%;
+  height: 150px;
+  text-align: center;
+  position: relative;
+  top: -890px;
+  left: 450px;
+  opacity: 0;
+  transition: all 0.8s 0.4s ease;
+}
+
+.success-left {
+  transform: translateX(-406px);
+  opacity: 1;
+}
+
+.successtext {
+  margin-top: 55px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+#check path {
+  stroke: #ffffff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 0.85px;
+  stroke-dasharray: 60px 300px;
+  stroke-dashoffset: -166px;
+  fill: rgba(255, 255, 255, 0);
+  transition: stroke-dashoffset 2s ease 0.5s, fill 1.5s ease 1s;
+}
+
+#check.checked path {
+  stroke-dashoffset: 33px;
+  fill: rgba(255, 255, 255, 0.03);
+}
+
+.form-signin input, .form-signup input {
+  color: #ffffff;
+  font-size: 13px;
+}
+
+.form-styling {
+  width: 100%;
+  height: 35px;
+  padding-left: 15px;
+  border: none;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+label {
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 13px;
+  padding-left: 15px;
+  padding-bottom: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  display: block;
+}
+
+:focus {
+  outline: none;
+}
+
+.form-signin input:focus, textarea:focus, .form-signup input:focus, textarea:focus {
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  padding-right: 40px;
+  transition: background 0.5s ease;
+}
+
+[type=checkbox]:not(:checked),
+[type=checkbox]:checked {
+  position: absolute;
+  display: none;
+}
+
+[type=checkbox]:not(:checked) + label,
+[type=checkbox]:checked + label {
+  position: relative;
+  padding-left: 85px;
+  padding-top: 2px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+[type=checkbox]:not(:checked) + label:before,
+[type=checkbox]:checked + label:before,
+[type=checkbox]:not(:checked) + label:after,
+[type=checkbox]:checked + label:after {
+  content: "";
+  position: absolute;
+}
+
+[type=checkbox]:not(:checked) + label:before,
+[type=checkbox]:checked + label:before {
+  width: 65px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  left: 0;
+  top: -3px;
+  transition: all 0.2s ease;
+}
+
+[type=checkbox]:not(:checked) + label:after,
+[type=checkbox]:checked + label:after {
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  top: 7px;
+  left: 10px;
+  transition: all 0.2s ease;
+}
+
+/* on checked */
+[type=checkbox]:checked + label:before {
+  background: #0F4FE6;
+}
+
+[type=checkbox]:checked + label:after {
+  background: #ffffff;
+  top: 7px;
+  left: 45px;
+}
+
+[type=checkbox]:checked + label .ui,
+[type=checkbox]:not(:checked) + label .ui:before,
+[type=checkbox]:checked + label .ui:after {
+  position: absolute;
+  left: 6px;
+  width: 65px;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 22px;
+  transition: all 0.2s ease;
+}
+
+[type=checkbox]:not(:checked) + label .ui:before {
+  content: "no";
+  left: 32px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+[type=checkbox]:checked + label .ui:after {
+  content: "yes";
+  color: #ffffff;
+}
+
+[type=checkbox]:focus + label:before {
+  box-sizing: border-box;
+  margin-top: -1px;
+}
+
+.btn-signup {
+  float: left;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+  text-align: center;
+  color: #ffffff;
+  padding-top: 8px;
+  width: 100%;
+  height: 35px;
+  border: none;
+  border-radius: 20px;
+  margin-top: 23px;
+  background-color: #1059FF;
+}
+
+.btn-signin {
+  float: left;
+  padding-top: 8px;
+  width: 100%;
+  height: 35px;
+  border: none;
+  border-radius: 20px;
+  margin-top: -8px;
+}
+
+.btn-animate {
+  float: left;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+  text-align: center;
+  color: white;
+  padding-top: 8px;
+  width: 100%;
+  height: 35px;
+  border: none;
+  border-radius: 20px;
+  margin-top: 23px;
+  background-color: #1059ff;
+  left: 0px;
+  top: 0px;
+  transition: all 0.5s ease, top 0.5s ease 0.5s, height 0.5s ease 0.5s, background-color 0.5s ease 0.75s;
+}
+
+.btn-animate-grow {
+  width: 130%;
+  height: 625px;
+  position: relative;
+  left: -55px;
+  top: -420px;
+  color: rgba(255, 255, 255, 0);
+  background-color: white;
+}
+
+a.btn-signup:hover, a.btn-signin:hover {
+  cursor: pointer;
+  background-color: #0F4FE6;
+  transition: background-color 0.5s;
+}
+
+.forgot {
+  height: 100px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding-top: 24px;
+  margin-top: -535px;
+  border-top: solid 1px rgba(255, 255, 255, 0.3);
+  transition: all 0.5s ease;
+}
+
+.forgot-left {
+  transform: translateX(-400px);
+  opacity: 0;
+}
+
+.forgot-fade {
+  opacity: 0;
+}
+
+.forgot a {
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 400;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.welcome {
+  width: 100%;
+  height: 20px;
+  position: relative;
+  color: rgba(35, 43, 85, 0.75);
+  opacity: 0;
+  transition: transform 1.5s ease 0.25s, opacity 0.1s ease 1s;
+}
+
+.welcome-left {
+  transform: translateY(-870px);
+  opacity: 1;
+}
+
+.cover-photo {
+  height: 150px;
+  position: relative;
+  left: 0px;
+  top: -900px;
+  background: linear-gradient(rgba(35, 43, 85, 0.75), rgba(35, 43, 85, 0.95)), url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/landscape-nature-man-person.jpeg);
+  background-size: cover;
+  opacity: 0;
+  transition: all 1.5s ease 0.55s;
+}
+
+.cover-photo-down {
+  top: -575px;
+  opacity: 1;
+}
+
+.profile-photo {
+  height: 125px;
+  width: 125px;
+  position: relative;
+  border-radius: 70px;
+  left: 155px;
+  top: -1000px;
+  background: url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/nature-water-rocks-hiking.jpg);
+  background-size: 100% 135%;
+  background-position: 100% 100%;
+  opacity: 0;
+  transition: top 1.5s ease 0.35s, opacity 0.75s ease 0.5s;
+  border: solid 3px #ffffff;
+}
+
+.profile-photo-down {
+  top: -636px;
+  opacity: 1;
+}
+
+h1 {
+  color: #ffffff;
+  font-size: 35px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.btn-goback {
+  position: relative;
+  margin-right: auto;
+  top: -400px;
+  float: left;
+  padding: 8px;
+  width: 83%;
+  margin-left: 37px;
+  margin-right: 37px;
+  height: 35px;
+  border-radius: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+  text-align: center;
+  color: #1059FF;
+  margin-top: -8px;
+  border: solid 1px #1059FF;
+  opacity: 0;
+  transition: top 1.5s ease 0.35s, opacity 0.75s ease 0.5s;
+}
+
+.btn-goback-up {
+  top: -1080px;
+  opacity: 1;
+}
+
+a.btn-goback:hover {
+  cursor: pointer;
+  background-color: #0F4FE6;
+  transition: all 0.5s;
+  color: #ffffff;
+}
+
+/* refresh button styling */
+#refresh {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.1);
+  padding: 13px 0 0 13px;
+}
+
+.refreshicon {
+  fill: #d3d3d3;
+  transform: rotate(0deg);
+  transition: fill 0.25s ease, transform 0.25s ease;
+}
+
+.refreshicon:hover {
+  cursor: pointer;
+  fill: #1059FF;
+  transform: rotate(180deg);
+}
+
+/* Dropdown */
+.dropbtn {
+  background-color: #131210;
+  color: white;
+  display: flex;
+  border: 1px solid white;
+  justify-content: space-between;
+  padding: 10px 15px;
+  font-size: 16px;
+  align-items: center;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #1f1d19;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #131210;
+  min-width: 160px;
+  overflow: auto;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: white;
+  padding: 10px 10px;
+  text-decoration: none;
+  display: block;
+  border-radius: 15px;
+}
+
+.drop-icon {
+  padding-left: 20px;
+}
+
+.profile-text {
+  padding-right: 15px;
+}
+
+.paragraph {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  border-radius: 15px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+.paragraph:hover {
+  background-color: #1f1d19;
+}
+
+.paragraph a:hover {
+  background-color: #1f1d19;
+}
+
+.show {
+  display: block;
+}
+
+.crud {
+  display: flex;
+  flex-direction: column;
+}
+
+.user {
+  display: flex;
+}
+
+.editform {
+  font-size: 22px;
+  color: white;
+  padding-bottom: 25px;
+}
+
+.framecrud {
+  position: absolute;
+  left: 35%;
+  top: 15%;
+  height: 500px;
+  width: 430px;
+  background: #1f274e;
+  background-size: cover;
+  margin-left: auto;
+  margin-right: auto;
+  border-top: solid 1px rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.frame-info {
+  padding: 40px;
+  font-size: 20px;
+  color: white;
+  position: absolute;
+  top: 20%;
+  left: 35%;
+  height: 350px;
+  width: 515px;
+  background: linear-gradient(rgba(35, 43, 85, 0.75), rgba(35, 43, 85, 0.95)) no-repeat center center;
+  background-size: cover;
+  margin-left: auto;
+  margin-right: auto;
+  border-top: solid 1px rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.cost-text {
+  padding: 20px 0;
+}
+
+/* Dynmic car */
+.main-products {
+  margin: 0 auto;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+}
+
+.car-elements {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+}
+
+.selected-parents {
+  color: white;
+}
+
+.info-car-parent {
+  display: flex;
+  flex-direction: column;
+}
+
+.buy-input {
+  padding: 10px;
+  font-size: 20px;
+  border: none;
+  height: 45px;
+  max-width: 15%;
+  border-radius: 10px;
+}
+
+.buy-btn-wrapper {
+  display: flex;
+}
+
+.buy-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 25px;
+  margin: 0 30px;
+  border-radius: 10px;
+  background: #fe696a;
+}
+
+.name-info {
+  font-size: 40px;
+}
+
+.price-info {
+  padding: 3px 15px 10px 0;
+  font-size: 25px;
+}
+
+.buy-parent {
+  padding: 0 0 10px;
+}
+
+.info-product-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+/* Chose car */
+.chose-car {
+  position: absolute;
+  left: 25%;
+  top: 15%;
+  height: 366px;
+  width: 800px;
+  background: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), no-repeat center center;
+  background-size: cover;
+  margin-left: auto;
+  margin-right: auto;
+  border-top: solid 1px rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.chose-car-flex {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 30px;
+}
+
+.padding-car {
+  padding: 20px;
+}
+
+.order-text {
+  padding: 0 0 20px 0;
+  font-size: 30px;
+}
+
+.opacity {
+  opacity: 0.9;
+}
+
+.charElements {
+  max-width: 25%;
+  padding: 20px 0;
+}
+
+.char-car-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.get-info {
+  color: white;
+  margin: 50px 0;
+  padding: 5px 25px;
+  background: #135ec5;
+  position: relative;
+  border-radius: 15px;
+}
+
+.get-info-car {
+  margin: 20px 0;
+}
+
+.motor-detail {
+  max-width: 17%;
+  margin-left: 25px;
+}
+
+/* table */
+table {
+  color: white;
+  width: 100%;
+  border: 0;
+}
+
+td {
+  border-top: 1px solid gray;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 10px;
+  font-size: 14px;
+}
+
+/* CRUD btn */
+#view-btn {
+  background: gray;
+  border-radius: 18%;
+}
+
+#remove-btn {
+  background: gray;
+  border-radius: 18%;
+}
+
+#edit-btn {
+  background: gray;
+  border-radius: 18%;
+  margin: 0px 10px;
+}
+
+/* View */
+.close {
+  font-size: 28px;
+  padding: 15px 25px;
+}
+
+.close-car {
+  font-size: 28px;
+  padding: 15px 0;
+}
+
+.close-buck {
+  font-size: 28px;
+  padding: 5px 0px;
+}
+
+/* Show buy info */
+.info-buy-wrapper {
+  padding: 0 20px;
+}
+
+.bought-text {
+  padding: 7px 0;
+}
+
+.img-buck {
+  max-width: 35%;
+}
