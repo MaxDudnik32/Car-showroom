@@ -110,3 +110,153 @@ const showSignIn = () => {
     setTimeout(() => document.getElementById('logoForm').classList.add('hidden'), 3000);
     document.getElementById('mainMenu').classList.remove('hidden');
 }
+
+// DropDown
+
+const quit = () => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to leave from account!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, quit!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                'Congrat!',
+                'Your have quited!',
+                'success'
+            )
+            localStorage.removeItem('loginpers', JSON.stringify([]));
+            document.getElementById('mainMenu').classList.add('hidden');
+            document.getElementById('loginNav').classList.remove('hidden');
+            previousBtn();
+        } else {
+            Swal.fire('You are still here!');
+        }
+    })
+}
+
+const changePost = () => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to change the status!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, change!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                'Congrat!',
+                'Your have changed the status',
+                'success'
+            )
+            previousBtn();
+            let change = document.getElementById('changePost');
+            let post = JSON.parse(localStorage.getItem('loginpers')).postlog;
+            let index = JSON.parse(localStorage.getItem('loginpers'));
+            if(post == false) {
+                index.postlog = true;
+                change.innerHTML = 'Be manager';
+            } else {
+                index.postlog = false;
+                change.innerHTML = 'Be user';
+            }
+            localStorage.setItem('loginpers', JSON.stringify(index));
+        } else {
+            Swal.fire('You are still here!');
+        }
+    })
+}
+
+const checkStatus = () => {
+    let change = document.getElementById('changePost');
+    let post;
+    if(JSON.parse(localStorage.getItem('loginpers'))) {
+        post = JSON.parse(localStorage.getItem('loginpers')).postlog;
+    }
+    if(post == false) {
+        change.innerHTML = 'Be user';
+    } else {
+        change.innerHTML = 'Be manager';
+    }
+}
+
+// Character car 
+
+const charCar = () => {
+    const charParent = document.getElementById('chose-car');
+    charParent.innerHTML = `
+    <div id="close-btn" class="close">
+        <i class="fas fa-times"></i>
+    </div>
+    `;
+
+    document.getElementById('close-btn').addEventListener('click', function() {
+        charParent.classList.add('hidden');
+        charParent.classList.remove('chose-car-flex');
+        document.getElementById('header').classList.remove('opacity');
+        document.getElementById('main').classList.remove('opacity');
+    })
+
+    const charCarWrap = document.createElement('div');
+    charCarWrap.classList.add('char-car-wrapper');
+    charParent.appendChild(charCarWrap);
+
+    const carElement = document.createElement('img');
+    carElement.src = 'images/cars/' + (activeCar+1) + '.png';
+    carElement.classList.add('charElements');
+    charCarWrap.appendChild(carElement);
+
+    const carInfoBtn = document.createElement('a');
+    carInfoBtn.classList.add('get-info');
+    carInfoBtn.innerHTML = 'Get more info';
+    carInfoBtn.addEventListener('click', function() {
+        charParent.classList.add('hidden');
+        charParent.classList.remove('chose-car-flex');
+        document.getElementById('header').classList.remove('opacity');
+        document.getElementById('main').classList.remove('opacity');
+        hideElements();
+        showProductInfo(true);
+        showProductsDetails(activeCar, 0);
+        document.getElementById('selected-parents').innerHTML = "";
+        if(checkManager() === true) {
+            showUsersToSelect();
+        }
+        document.getElementById('back-wrapper').classList.remove('hidden')
+    })
+    charCarWrap.appendChild(carInfoBtn);
+
+    const charMotorWrap = document.createElement('div');
+    charMotorWrap.classList.add('char-car-wrapper');
+    charParent.appendChild(charMotorWrap);
+
+    const motorElement = document.createElement('img');
+    motorElement.src = 'images/details1/1.png';
+    motorElement.classList.add('charElements');
+    motorElement.classList.add('motor-detail');
+    charMotorWrap.appendChild(motorElement);
+
+    const motorInfoBtn = document.createElement('a');
+    motorInfoBtn.classList.add('get-info');
+    motorInfoBtn.innerHTML = 'Get more info';
+    motorInfoBtn.addEventListener('click', function() {
+        charParent.classList.add('hidden');
+        charParent.classList.remove('chose-car-flex');
+        document.getElementById('header').classList.remove('opacity');
+        document.getElementById('main').classList.remove('opacity');
+        hideElements();
+        showProductInfo(false);
+        showProductsDetails(activeCar, 1);
+        document.getElementById('selected-parents').innerHTML = "";
+        if(checkManager() === true) {
+            showUsersToSelect();
+        }
+        document.getElementById('back-wrapper').classList.remove('hidden')
+    })
+    charMotorWrap.appendChild(motorInfoBtn);
+}
