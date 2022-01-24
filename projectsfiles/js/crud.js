@@ -1,3 +1,31 @@
+// Show Crud
+
+const hideElements = () => {
+    const main = document.getElementById('mainCar');
+    const mainBtn = document.getElementById('carPage');
+    main.classList.remove('mainCar');
+    main.classList.add('hidden');
+    mainBtn.classList.remove('carPage');
+    mainBtn.classList.add('hidden');
+}
+
+const unhideElements = () => {
+    const main = document.getElementById('mainCar');
+    const mainBtn = document.getElementById('carPage');
+    main.classList.add('mainCar');
+    main.classList.remove('hidden');
+    mainBtn.classList.add('carPage');
+    mainBtn.classList.remove('hidden');
+}
+
+const showCRUD = () => {
+    document.getElementById('back-wrapper').classList.remove('hidden');
+    document.getElementById('info-car').classList.remove('info-car');
+    document.getElementById('info-car').classList.add('hidden');
+    hideElements();
+    showUsers();
+}
+
 function showUsers() {
     let parentCrud = document.getElementById('crud');
     parentCrud.innerHTML = `
