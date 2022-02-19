@@ -22,6 +22,8 @@ const showCRUD = () => {
     document.getElementById('back-wrapper').classList.remove('hidden');
     document.getElementById('info-car').classList.remove('info-car');
     document.getElementById('info-car').classList.add('hidden');
+    previousBtn();
+    document.getElementById('back-wrapper').classList.remove('hidden');
     hideElements();
     showUsers();
 }
